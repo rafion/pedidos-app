@@ -1,0 +1,21 @@
+.title {
+    font-size: 2rem; /*unidade relativa */
+    font-weight: 300;
+    line-height: 1.2;
+  }
+
+table {
+    width: 100%;
+}
+.edit{
+    margin-right: 15px;
+}
+
+.edit > i{
+    color:#008CBA;
+}
+
+.delete > i{
+    color: #D11A2A;
+}
+

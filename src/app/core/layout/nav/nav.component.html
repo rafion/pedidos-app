@@ -1,0 +1,48 @@
+<mat-sidenav-container class="sidenav-container">
+
+    <mat-sidenav #drawer class="sidenav" fixedInViewport="true" [attr.role]="isHandset ? 'dialog' : 'navigation'"
+        [mode]="(isHandset | async)!.matches ? 'over' : 'side'" [opened]="!(isHandset | async)!.matches">
+
+        <mat-nav-list>
+
+            <div class="profile-card">
+                <div class="profile-card-header">
+                    <h3>Ráfion User</h3>
+
+                </div>
+                <img src="assets\img\angularImg.png" class="profile_image" alt="">
+
+            </div>
+
+            <mat-divider></mat-divider>
+
+            <h2 matSubheader>Menu</h2>
+
+            <mat-divider></mat-divider>
+
+            <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/participantes']">
+                <mat-icon class="sidenav-icon">people</mat-icon> Participantes
+            </a>
+            <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/categories']">
+                <mat-icon class="sidenav-icon">build</mat-icon> Categorias
+            </a>
+            <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/test']">
+                <mat-icon class="sidenav-icon">people</mat-icon> Testes
+            </a>
+            <mat-divider></mat-divider>
+        </mat-nav-list>
+
+    </mat-sidenav>
+
+
+    <main>
+        <div class="main-container">
+
+            <router-outlet></router-outlet>
+
+
+        </div>
+    </main>
+
+
+</mat-sidenav-container>

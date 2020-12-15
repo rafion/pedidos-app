@@ -1,0 +1,148 @@
+.title {
+  font-size: 2rem; /*unidade relativa */
+  font-weight: 300;
+  line-height: 1.2;
+}
+
+#checkbox-section {
+    margin: 8px 0;
+    display: flex;
+   align-items: center;
+   float: right;
+    
+  }
+  
+  .checkbox-margin {
+    margin: 0 12px;
+  }
+
+  #radio-section {
+    margin: 8px 0;
+    display: flex;
+   align-items: center;
+   float: left;
+    
+  }
+  
+
+  .radio-margin{
+    margin: 0 12px;
+  }
+
+  .mat-radio-button ~ .mat-radio-button {
+    margin-left: 16px;
+  }
+
+  #form-tab{
+    /*limpa a propriedade float da div de cima */
+    clear: both;
+
+  }
+
+  .check-spacer {
+    flex: 1 1 auto;
+}
+
+  form .form-field {
+    display: flex; /* deixa o fixo, atrapalha o responsivo padrao*/
+    flex-direction: column;
+    max-width : 350px;
+    margin-top: 20px;
+    
+    }
+
+ 
+
+
+.mat-tab-group {
+  margin-bottom: 48px;
+}
+
+
+  .form {
+    min-width: 100px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .full-width {
+    width: 100%;
+  }
+
+  .half-width{
+    width: 98%;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+
+  td {
+    padding-right: 8px;
+  }
+
+
+
+
+ 
+  button {
+    
+    margin: 5px ;
+   
+    margin-right: 20px;
+}
+
+
+.mat-card-form{
+  border: 1px solid #CFD8DC; 
+  border-radius: 4px 3px 6px / 2px 4px; 
+  padding-top: 15px; 
+  padding-left: 0%; 
+  padding-right: 0%; 
+  padding-bottom: 0%;
+  margin-top: 2px;
+ /* height: 330px;
+  max-width: 100%;
+  max-height: 100%;
+*/
+}
+
+
+
+
+
+
+
+
+
+.formContato{
+	box-shadow: 0px 0px 5px grey;
+	padding-top: 20px;
+	padding-left: 20px;
+	padding-bottom: 10px;
+	margin-bottom: 60px;
+}
+
+
+
+
+
+.contato-container{
+  margin-left: 8px;
+}
+
+.table-contatos .table-Enderecos  {
+  width: 100%;
+}
+
+.delete > i{
+  color: #D11A2A;
+}
+
+table {
+  width: 100%;
+}
+
+mat-form-field{
+  padding-right: 8px;
+}

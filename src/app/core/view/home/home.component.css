@@ -1,0 +1,10 @@
+
+.home .title {
+    font-size: 3rem; /*unidade relativa */
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+.home .suntitle {
+    font-size: 1.1em;
+}
