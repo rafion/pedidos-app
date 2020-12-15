@@ -27,21 +27,21 @@ export class ParticipanteCreateComponent implements OnInit {
   public MASKS = MASKS;
 
   tipoContatos = ['Telefone', 'Email'];
-  contatos: Contato[] = [
+  contatos: Contato[] = []; /* [
     { id: 1, tipo: 'PESSOAL', nome: 'Rafion', telefone: '79998063899', email: 'rafion.torres@gmail.com', favorito: false },
     { id: 2, tipo: 'COMERCIAL', nome: 'Rafion', telefone: '79998063899', email: 'rafion.torres@gmail.com', favorito: false },
     { id: 3, tipo: 'PESSOAL', nome: 'Rafion', telefone: '79998063899', email: 'rafion.torres@gmail.com', favorito: false }
 
-  ];
+  ]; */
 
-  displayedColumnsContato = ['id', 'tipo', 'nome', 'telefone', 'email', 'favorito', 'action']
+  displayedColumnsContato = ['tipo', 'nome', 'telefone', 'email', 'favorito', 'action']
 
-  displayedColumnsEndereco = ['id', 'logradouro', 'numero', 'bairro', 'tipo', 'cidade', 'uf', 'action']
+  displayedColumnsEndereco = ['logradouro', 'numero', 'bairro', 'tipo', 'cidade', 'uf', 'action']
 
-  enderecos: Endereco[] = [
-    { id: 1, logradouro: 'Rua D', numero: '10', bairro: 'Centro', tipo: 'Residencial', cidade: 'Aracaju', uf: 'SE', favorito: false },
-    { id: 2, logradouro: 'Rua F', numero: '10', bairro: 'Centro', tipo: 'Corporativo', cidade: 'Aracaju', uf: 'SE', favorito: false }
-  ];
+  enderecos: Endereco[] = []; //= [
+  // { id: 1, logradouro: 'Rua D', numero: '10', bairro: 'Centro', tipo: 'Residencial', cidade: 'Aracaju', uf: 'SE', favorito: false },
+  //  { id: 2, logradouro: 'Rua F', numero: '10', bairro: 'Centro', tipo: 'Corporativo', cidade: 'Aracaju', uf: 'SE', favorito: false }
+  // ];
 
   radioPessoa: 'F' | 'J' = 'F'; //= "F";
   pessoas: any; // string[]; //= ["P. Fisica", "P. Juridica"];
@@ -93,12 +93,28 @@ export class ParticipanteCreateComponent implements OnInit {
       dataNascimento: [null],
       cnpj: [null],
       inscricaoEstadual: [null],
-      cep: [null],
-      logradouro: [null],
-      numero: [null],
-      complemento: [null],
-      cidade: [null],
-      uf: [null],
+
+      endereco: this.formBuilder.group({
+        id: [null],
+        cep: [null],
+        tipo: [null],
+        logradouro: [null],
+        bairro: [null],
+        numero: [null],
+        complemento: [null],
+        cidade: [null],
+        uf: [null],
+      }),
+
+      contato: this.formBuilder.group({
+        id: [null],
+        tipo: [null],
+        nome: [null],
+        telefone: [null],
+        email: [null],
+        favorio: [false]
+      })
+
     })
 
     this.pessoas = this.getPessoa();
@@ -112,6 +128,7 @@ export class ParticipanteCreateComponent implements OnInit {
     nome: '',
   };
 
+  /*
   endereco: Endereco = {
     cep: '',
     logradouro: '',
@@ -125,7 +142,7 @@ export class ParticipanteCreateComponent implements OnInit {
     tipo: '',
     favorito: false
   };
-
+*/
 
 
 
@@ -134,19 +151,21 @@ export class ParticipanteCreateComponent implements OnInit {
   onSubmit() {
 
 
-    this.participanteService.create(this.participanteForm.value).subscribe(response => {
-      this.success = true;
-      this.participanteService.showMessage('Participante criado!', false);
-      this.participante = new Participante;
-      this.router.navigate(['/participantes'])
-      console.log(response);
-    }, errorResponse => {
-      this.success = false;
-      this.errors = errorResponse.error.message;
-      this.participanteService.showMessage(errorResponse.error.message, true)
-      //console.log(errorResponse.error.message) //acessando a magen de erro da api
-    }
-    )
+    /*
+        this.participanteService.create(this.participanteForm.value).subscribe(response => {
+          this.success = true;
+          this.participanteService.showMessage('Participante criado!', false);
+          this.participante = new Participante;
+          this.router.navigate(['/participantes'])
+          console.log(response);
+        }, errorResponse => {
+          this.success = false;
+          this.errors = errorResponse.error.message;
+          this.participanteService.showMessage(errorResponse.error.message, true)
+          //console.log(errorResponse.error.message) //acessando a magen de erro da api
+        }
+        )
+        */
 
     console.log(this.participanteForm.value)
 
@@ -185,9 +204,18 @@ export class ParticipanteCreateComponent implements OnInit {
         // console.log(response);
         if (this.cepModel.localidade != null) {
 
-          (<HTMLInputElement>document.getElementById("logradouro")).value = this.cepModel.logradouro;
-          (<HTMLInputElement>document.getElementById("cidade")).value = this.cepModel.localidade;
-          (<HTMLInputElement>document.getElementById("estado")).value = this.cepModel.uf;
+          //dessa forma preenche o formulario mas não passa o value para ele.
+          // (<HTMLInputElement>document.getElementById("logradouro")).value = (this.cepModel.logradouro);
+          //(<HTMLInputElement>document.getElementById("cidade")).value = this.cepModel.localidade;
+          // (<HTMLInputElement>document.getElementById("estado")).value = this.cepModel.uf;
+          //(<HTMLInputElement>document.getElementById("bairro")).value = this.cepModel.bairro;
+
+          //preenche o formulario e passao o value
+          this.participanteForm.get('endereco.logradouro').setValue(this.cepModel.logradouro);
+          this.participanteForm.get('endereco.cidade').setValue(this.cepModel.localidade);
+          this.participanteForm.get('endereco.uf').setValue(this.cepModel.uf);
+          this.participanteForm.get('endereco.bairro').setValue(this.cepModel.bairro);
+
           console.log('entrou no response');
         } else {
           alert('CEP não encontrado, informe um CEP valido')
@@ -199,21 +227,22 @@ export class ParticipanteCreateComponent implements OnInit {
 
     } else {
       //cep sem valor, limpa formulário.
-      this.limpa_formulario_cep();
+      // this.limpa_formulario_cep();
+      this.participanteForm.get('endereco').reset();
     }
 
   }
-
-  limpa_formulario_cep() {
-    //Limpa valores do formulário de cep.
-    (<HTMLInputElement>document.getElementById("rua")).value = '';
-    (<HTMLInputElement>document.getElementById("bairro")).value = '';
-    (<HTMLInputElement>document.getElementById("cidade")).value = '';
-    (<HTMLInputElement>document.getElementById("uf")).value = '';
-    (<HTMLInputElement>document.getElementById("ibge")).value = '';
-
-  }
-
+  /*
+    limpa_formulario_cep() {
+      //Limpa valores do formulário de cep.
+      (<HTMLInputElement>document.getElementById("logradouro")).value = '';
+      (<HTMLInputElement>document.getElementById("bairro")).value = '';
+      (<HTMLInputElement>document.getElementById("cidade")).value = '';
+      (<HTMLInputElement>document.getElementById("uf")).value = '';
+      (<HTMLInputElement>document.getElementById("ibge")).value = '';
+  
+    }
+  */
 
   getPessoa() {
     return [
@@ -238,17 +267,73 @@ export class ParticipanteCreateComponent implements OnInit {
     return this.isCPF() ? '000.000.000-009' : '00.000.000/0000-00';
   }
 
-  favoritar(contato: Contato) {
+  favoritarContato(contato: Contato) {
     // this.service.favourite(contato).subscribe(response => {
     // contato.favorito = !contato.favorito;
     // })
-    console.log("favotitado!");
+    console.log("contato favotitado!");
 
+  }
+
+  newContato(contato: Contato) {
+    console.log("formulario contato novo")
+  }
+
+  addContato(contato: Contato) {
+    console.log("contato adcionado")
+    console.log(contato)
+    this.contatos.push(contato);
+    console.log(this.contatos);
+    console.log('tamanho do arry contatos: ')
+    console.log(this.contatos.length);
+
+    this.participanteForm.get('contato').reset();
+    //refresh na tabela
+    this.contatos = Array.from(this.contatos);
   }
 
   deleteContato(contato: Contato) {
     console.log("conato Delete!")
+    let posicao = this.contatos.indexOf(contato);
+    this.contatos.splice(posicao, 1);
+    this.contatos = Array.from(this.contatos);
   }
+
+  newEndereco(endereco: Endereco) {
+    console.log('novo endereco, limpar formularios endereco')
+    this.participanteForm.get('endereco').reset();
+
+  }
+  favoritarEndereco(endecco: Endereco) {
+    console.log('Endereco favoritado')
+  }
+
+  addEndereco(endereco: Endereco) {
+    console.log('Endereco adcionado')
+    console.log(endereco)
+
+    this.enderecos.push(endereco);
+    console.log(this.enderecos);
+    console.log('tamanho do arry enderecos: ')
+    console.log(this.enderecos.length);
+
+    this.participanteForm.get('endereco').reset();
+    //refresh na tabela
+    this.enderecos = Array.from(this.enderecos);
+  }
+
+  deleteEndereco(endereco: Endereco) {
+    console.log('Endereco deletado')
+    //this.enderecos.splice(index, 1); //remover
+
+    //pega a possição no array
+    let posicao = this.enderecos.indexOf(endereco);
+    this.enderecos.splice(posicao, 1);
+
+    //refresh na tabela
+    this.enderecos = Array.from(this.enderecos);
+  }
+
 
 
 
