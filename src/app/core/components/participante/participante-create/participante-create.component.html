@@ -47,21 +47,26 @@
                 <mat-tab-group mat-align-tabs="start" dynamicHeight>
                     <mat-tab label="Cadastro">
                         <mat-card class="half-width">
+
                             <table class="full-width" cellspacing="0">
                                 <tr>
                                     <td>
-                                        <mat-form-field class="full-width">
-                                            <mat-label>Nome</mat-label>
-                                            <input matInput placeholder="Nome" name="nome" formControlName='nome'
-                                                required>
-                                        </mat-form-field>
+                                        <ng-container formGroupName="participante">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Nome</mat-label>
+                                                <input matInput placeholder="Nome" name="nome" formControlName='nome'
+                                                    required>
+                                            </mat-form-field>
+                                        </ng-container>
                                     </td>
                                     <td *ngIf="radioPessoa=='J' ? true : false">
-                                        <mat-form-field class="full-width">
-                                            <mat-label>Nome fantasia</mat-label>
-                                            <input matInput placeholder="Nome Fantasia" name="nomeFantasia"
-                                                formControlName="nomeFantasia">
-                                        </mat-form-field>
+                                        <ng-container formGroupName="participante">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Nome fantasia</mat-label>
+                                                <input matInput placeholder="Nome Fantasia" name="nomeFantasia"
+                                                    formControlName="nomeFantasia">
+                                            </mat-form-field>
+                                        </ng-container>
                                     </td>
                                 </tr>
                             </table>
@@ -69,32 +74,40 @@
                             <table class="full-width" cellspacing="0">
                                 <tr>
                                     <td *ngIf="radioPessoa=='F' ? true : false">
-                                        <mat-form-field class="full-width">
-                                            <mat-label>CPF</mat-label>
-                                            <input matInput mask="000.000.000-00" placeholder="CPF" name="cpf"
-                                                formControlName="cpf">
-                                        </mat-form-field>
+                                        <ng-container formGroupName="participante">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>CPF</mat-label>
+                                                <input matInput mask="000.000.000-00" placeholder="CPF" name="cpf"
+                                                    formControlName="cpf">
+                                            </mat-form-field>
+                                        </ng-container>
                                     </td>
                                     <td *ngIf="radioPessoa=='F' ? true : false">
-                                        <mat-form-field class="full-width">
-                                            <mat-label>Data Nascimento</mat-label>
-                                            <input matInput type="date" placeholder="Data Nascimento"
-                                                name="dataNascimento" formControlName="dataNascimento">
-                                        </mat-form-field>
+                                        <ng-container formGroupName="participante">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Data Nascimento</mat-label>
+                                                <input matInput type="date" placeholder="Data Nascimento"
+                                                    name="dataNascimento" formControlName="dataNascimento">
+                                            </mat-form-field>
+                                        </ng-container>
                                     </td>
                                     <td *ngIf="radioPessoa=='J' ? true : false">
-                                        <mat-form-field class="full-width">
-                                            <mat-label>CNPJ</mat-label>
-                                            <input matInput placeholder="CNPJ" mask="00.000.000/0000-00" name="cnpj"
-                                                formControlName="cnpj">
-                                        </mat-form-field>
+                                        <ng-container formGroupName="participante">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>CNPJ</mat-label>
+                                                <input matInput placeholder="CNPJ" mask="00.000.000/0000-00" name="cnpj"
+                                                    formControlName="cnpj">
+                                            </mat-form-field>
+                                        </ng-container>
                                     </td>
                                     <td *ngIf="radioPessoa=='J' ? true : false">
-                                        <mat-form-field class="full-width">
-                                            <mat-label>Inscrição Estadual</mat-label>
-                                            <input matInput placeholder="Inscrição Estadual" name="inscricaoEstadual"
-                                                formControlName="inscricaoEstadual">
-                                        </mat-form-field>
+                                        <ng-container formGroupName="participante">
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Inscrição Estadual</mat-label>
+                                                <input matInput placeholder="Inscrição Estadual"
+                                                    name="inscricaoEstadual" formControlName="inscricaoEstadual">
+                                            </mat-form-field>
+                                        </ng-container>
                                     </td>
                                 </tr>
                             </table>
@@ -102,6 +115,18 @@
                             <mat-divider></mat-divider>
                             <table class="full-width" cellspacing="0">
                                 <tr>
+                                    <td>
+                                        <mat-form-field class="full-width">
+                                            <mat-label>Tipo</mat-label>
+                                            <ng-container formGroupName="endereco">
+                                                <mat-select type="string" formControlName="tipo">
+                                                    <mat-option value='Residencial'>Residencial</mat-option>
+                                                    <mat-option value='Comercial'>Comercial</mat-option>
+                                                </mat-select>
+                                            </ng-container>
+
+                                        </mat-form-field>
+                                    </td>
 
                                     <td>
                                         <mat-form-field class="full-width">
@@ -187,6 +212,19 @@
                                 <tr>
                                     <td>
                                         <mat-form-field class="full-width">
+                                            <mat-label>Tipo Contato</mat-label>
+                                            <ng-container formGroupName="contato">
+                                                <mat-select type="string" formControlName="tipo">
+                                                    <mat-option value='Pessoal'>Pessoal</mat-option>
+                                                    <mat-option value='Comercial'>Comercial</mat-option>
+                                                </mat-select>
+                                            </ng-container>
+
+                                        </mat-form-field>
+                                    </td>
+
+                                    <td>
+                                        <mat-form-field class="full-width">
                                             <mat-label>Nome para contato</mat-label>
                                             <ng-container formGroupName="contato">
                                                 <input matInput type="text" value="" name="nome" class="validate"
@@ -222,7 +260,7 @@
                     </mat-tab>
 
 
-                    <mat-tab label="Enderecos">
+                    <mat-tab label="Endereços">
                         <mat-card class="half-width">
                             <!--<tr>
                                 <td>
@@ -410,6 +448,9 @@
                 </mat-tab-group>
                 <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
                     Salvar
+                </button>
+                <button mat-raised-button color="accent" (click)="limparFom()">
+                    Novo
                 </button>
 
                 <button mat-raised-button color="warn" (click)="cancel()">

@@ -29,23 +29,16 @@ export class ParticipanteCreateComponent implements OnInit {
   //cepmask = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
   public MASKS = MASKS;
 
-
+  cepModel = new Cep();
+  participante: Participante = new Participante();
+  endereco: Endereco = new Endereco();
+  contato: Contato = new Contato();
   tipoContatos = ['Telefone', 'Email'];
-  contatos: Contato[] = []; /* [
-    { id: 1, tipo: 'PESSOAL', nome: 'Rafion', telefone: '79998063899', email: 'rafion.torres@gmail.com', favorito: false },
-    { id: 2, tipo: 'COMERCIAL', nome: 'Rafion', telefone: '79998063899', email: 'rafion.torres@gmail.com', favorito: false },
-    { id: 3, tipo: 'PESSOAL', nome: 'Rafion', telefone: '79998063899', email: 'rafion.torres@gmail.com', favorito: false }
-
-  ]; */
+  contatos: Contato[] = [];
 
   displayedColumnsContato = ['tipo', 'nome', 'telefone', 'email', 'favorito', 'action']
-
   displayedColumnsEndereco = ['logradouro', 'numero', 'bairro', 'tipo', 'cidade', 'uf', 'action']
-  //endereco: Endereco;
-  enderecos: Endereco[] = []; //= [
-  // { id: 1, logradouro: 'Rua D', numero: '10', bairro: 'Centro', tipo: 'Residencial', cidade: 'Aracaju', uf: 'SE', favorito: false },
-  //  { id: 2, logradouro: 'Rua F', numero: '10', bairro: 'Centro', tipo: 'Corporativo', cidade: 'Aracaju', uf: 'SE', favorito: false }
-  // ];
+  enderecos: Endereco[] = [];
 
   radioPessoa: 'F' | 'J' = 'F'; //= "F";
   pessoas: any; // string[]; //= ["P. Fisica", "P. Juridica"];
@@ -54,9 +47,6 @@ export class ParticipanteCreateComponent implements OnInit {
   errors: String[];
 
   participanteForm: FormGroup;
-
-
-  //checkClienteControl: boolean = false;
 
   checkboxCliente = true;
   checkboxFornecedor = false;
@@ -69,40 +59,21 @@ export class ParticipanteCreateComponent implements OnInit {
     private cepService: ConsultaCepService,
     private participanteService: ParticipanteService,
     private dialog: MatDialog
-
   ) { }
 
   ngOnInit(): void {
-    /*instanciando formulario sem o form builder
-  this.formulario = new FormGroup({
-    nome: new FormControl(null),
-    nomeFantasia: new FormControl(null),
-    cpf: new FormControl(null),
-    dataNascimento: new FormControl(null),
-    cnpj: new FormControl(null),
-    inscricaoEstadual: new FormControl(null),
-    cep: new FormControl(null),
-    logradouro: new FormControl(null),
-    numero: new FormControl(null),
-    complemento: new FormControl(null),
-    cidade: new FormControl(null),
-    uf: new FormControl(null), 
-    
-   
-  }); */
 
-    //com o formBuilder
     this.participanteForm = this.formBuilder.group({
-      nome: ['', [Validators.required]],
-      nomeFantasia: [null],
-      cpf: [null],
-      dataNascimento: [null],
-      cnpj: [null],
-      inscricaoEstadual: [null],
+      participante: this.formBuilder.group({
+        nome: ['', [Validators.required]],
+        nomeFantasia: [null],
+        cpf: [null],
+        dataNascimento: [null],
+        cnpj: [null],
+        inscricaoEstadual: [null],
+      }),
       // endereco: this.formBuilder.array([]),
       //contacts: this.formBuilder.array([]),
-
-
       endereco: this.formBuilder.group({
         id: [null],
         cep: [null],
@@ -123,39 +94,38 @@ export class ParticipanteCreateComponent implements OnInit {
         email: [null],
         favorio: [false]
       })
-
-
     })
 
     this.pessoas = this.getPessoa();
 
   }
-
-  createContatosFormGroup(): FormGroup {
-    return this.formBuilder.group({
-      id: [null],
-      tipo: [null],
-      nome: [null],
-      telefone: [null],
-      email: [null],
-      favorio: [false]
-    })
-  }
-
-  createEnderecosFormGroup(): FormGroup {
-    return this.formBuilder.group({
-      id: [null],
-      cep: [null],
-      tipo: [null],
-      logradouro: [null],
-      bairro: [null],
-      numero: [null],
-      complemento: [null],
-      cidade: [null],
-      uf: [null],
-    })
-  }
-
+  /*
+    createContatosFormGroup(): FormGroup {
+      return this.formBuilder.group({
+        id: [null],
+        tipo: [null],
+        nome: [null],
+        telefone: [null],
+        email: [null],
+        favorio: [false]
+      })
+    }
+  
+    createEnderecosFormGroup(): FormGroup {
+      return this.formBuilder.group({
+        id: [null],
+        cep: [null],
+        tipo: [null],
+        logradouro: [null],
+        bairro: [null],
+        numero: [null],
+        complemento: [null],
+        cidade: [null],
+        uf: [null],
+      })
+    }
+  
+    */
   ////adcionarContato() {
   //   this.contacts = this.participanteForm.get('contato') as FormArray;
   // this.contacts.push(this.createContatosFormGroup());
@@ -164,16 +134,7 @@ export class ParticipanteCreateComponent implements OnInit {
 
 
 
-  cepModel = new Cep();
 
-
-  participante: Participante = {
-    nome: '',
-  };
-
-
-  endereco: Endereco = new Endereco();
-  contato: Contato = new Contato();
   /*
   {
     cep: '',
@@ -190,14 +151,7 @@ export class ParticipanteCreateComponent implements OnInit {
   };
   */
 
-
-
-
-
-
   onSubmit() {
-
-
     /*
         this.participanteService.create(this.participanteForm.value).subscribe(response => {
           this.success = true;
@@ -213,15 +167,19 @@ export class ParticipanteCreateComponent implements OnInit {
         }
         )
         */
+    //console.log(this.participanteForm.value)
+    this.participante = this.participanteForm.value.participante;
+    this.contatos.push(this.participanteForm.value.contato);
+    this.enderecos.push(this.participanteForm.value.endereco)
 
+    this.participante.contatos = this.contatos;
+    this.participante.enderecos = this.enderecos;
 
-    console.log(this.participanteForm.value)
-
-    this.participante = this.participanteForm.value;
     console.log('objeto formulario:')
     console.log(this.participante);
-
-
+    console.log(this.contatos);
+    console.log(this.enderecos);
+    console.log(this.participante);
   }
 
   createParticipante(): void {
@@ -245,6 +203,10 @@ export class ParticipanteCreateComponent implements OnInit {
 
   cancel(): void {
     this.router.navigate(['/participantes'])
+    this.participanteForm.reset();
+  }
+
+  limparFom() {
     this.participanteForm.reset();
   }
 
@@ -392,9 +354,15 @@ export class ParticipanteCreateComponent implements OnInit {
       minWidth: '500px',
 
       data: {
-        tipo: this.endereco.tipo, cep: this.endereco.cep, cidade: this.endereco.cidade,
-        uf: this.endereco.uf, bairro: this.endereco.bairro, logradouro: this.endereco.logradouro,
-        numero: this.endereco.numero, complemento: this.endereco.complemento
+        id: this.endereco.id,
+        tipo: this.endereco.tipo,
+        cep: this.endereco.cep,
+        cidade: this.endereco.cidade,
+        uf: this.endereco.uf,
+        bairro: this.endereco.bairro,
+        logradouro: this.endereco.logradouro,
+        numero: this.endereco.numero,
+        complemento: this.endereco.complemento
       }
 
 
@@ -420,6 +388,7 @@ export class ParticipanteCreateComponent implements OnInit {
       minWidth: '500px',
 
       data: {
+        id: this.contato.id,
         tipo: this.contato.tipo,
         nome: this.contato.nome,
         telefone: this.contato.telefone,

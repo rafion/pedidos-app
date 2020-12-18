@@ -14,8 +14,8 @@ export class Endereco {
     favorito: boolean;
 
     constructor() {
-
-        this.cep = '',
+        this.id = null,
+            this.cep = '',
             this.logradouro = '',
             this.complemento = '',
             this.bairro = '',

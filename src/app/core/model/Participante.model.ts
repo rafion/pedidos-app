@@ -9,7 +9,11 @@ export class Participante {
     inscricaoEstadual?: string
     ativo?: boolean;
     dataNascimento?: Date;
-    enderecos?: Endereco;
-    contatos?: Contato;
+    enderecos?: Endereco[];
+    contatos?: Contato[];
+
+    constructor() {
+        this.nome = '';
+    }
 
 }

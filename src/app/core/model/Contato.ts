@@ -8,6 +8,7 @@ export class Contato {
     favorito: boolean;
 
     constructor() {
+        this.id = null;
         this.tipo = '';
         this.nome = '';
         this.telefone = '';
