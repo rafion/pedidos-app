@@ -6,4 +6,12 @@ export class Contato {
     telefone: string;
     email?: string;
     favorito: boolean;
+
+    constructor() {
+        this.tipo = '';
+        this.nome = '';
+        this.telefone = '';
+        this.email = ''
+        this.favorito = false;
+    }
 }

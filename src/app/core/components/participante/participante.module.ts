@@ -28,9 +28,12 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import { NgxMaskModule } from 'ngx-mask';
-import { NgBrazil } from 'ng-brazil'
+import { NgBrazil } from 'ng-brazil';
+import { ParticipanteFormEnderecoDialogComponent } from './participante-form-endereco-dialog/participante-form-endereco-dialog.component';
+import { ParticipanteContatoDialogComponent } from './participante-contato-dialog/participante-contato-dialog.component'
 
 
 @NgModule({
@@ -38,7 +41,9 @@ import { NgBrazil } from 'ng-brazil'
     ParticipanteUpdateComponent,
     ParticipanteReadComponent,
     ParticipanteCreateComponent,
-    ParticipanteDeleteComponent
+    ParticipanteDeleteComponent,
+    ParticipanteFormEnderecoDialogComponent,
+    ParticipanteContatoDialogComponent
   ],
   imports: [
     CommonModule,
@@ -61,7 +66,8 @@ import { NgBrazil } from 'ng-brazil'
     NgBrazil,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule
   ],
   exports: [
     MatCardModule,
@@ -81,7 +87,8 @@ import { NgBrazil } from 'ng-brazil'
     NgBrazil,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule
+    MatSortModule,
+    MatDialogModule
   ]
 })
 export class ParticipanteModule { }

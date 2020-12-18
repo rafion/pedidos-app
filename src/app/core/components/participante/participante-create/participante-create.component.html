@@ -99,27 +99,10 @@
                                 </tr>
                             </table>
 
-
-                        </mat-card>
-                    </mat-tab>
-
-
-                    <mat-tab label="Enderecos">
-                        <mat-card class="half-width">
+                            <mat-divider></mat-divider>
                             <table class="full-width" cellspacing="0">
                                 <tr>
-                                    <td>
-                                        <mat-form-field class="full-width">
-                                            <mat-label>Tipo</mat-label>
-                                            <ng-container formGroupName="endereco">
-                                                <mat-select type="string" formControlName="tipo">
-                                                    <mat-option value='Residencial'>Residencial</mat-option>
-                                                    <mat-option value='Comercial'>Comercial</mat-option>
-                                                </mat-select>
-                                            </ng-container>
 
-                                        </mat-form-field>
-                                    </td>
                                     <td>
                                         <mat-form-field class="full-width">
                                             <mat-label for="cep">CEP</mat-label>
@@ -131,7 +114,33 @@
                                             <!--  <mat-hint align="end">{{cep.value.length}} / 8</mat-hint>-->
                                         </mat-form-field>
                                     </td>
+                                    <td>
+                                        <mat-form-field class="full-width">
+                                            <mat-label>Cidade</mat-label>
+                                            <ng-container formGroupName="endereco">
+                                                <input matInput placeholder="Ex. Aracaju" #cidade id="cidade" required
+                                                    name="cidade" formControlName="cidade">
+                                            </ng-container>
+                                        </mat-form-field>
+                                    </td>
+                                    <td>
+                                        <mat-form-field class="full-width">
+                                            <mat-label>Estado</mat-label>
+                                            <ng-container formGroupName="endereco">
+                                                <input matInput placeholder="Ex. sergipe" #estado id="estado" name="uf"
+                                                    required formControlName="uf">
+                                            </ng-container>
+                                        </mat-form-field>
+                                    </td>
 
+
+
+
+                                </tr>
+                            </table>
+
+                            <table class="full-width" cellspacing="0">
+                                <tr>
                                     <td>
                                         <mat-form-field class="full-width">
                                             <mat-label>Bairro</mat-label>
@@ -141,12 +150,6 @@
                                             </ng-container>
                                         </mat-form-field>
                                     </td>
-
-
-                                </tr>
-                            </table>
-                            <table class="full-width" cellspacing="0">
-                                <tr>
                                     <td>
                                         <mat-form-field class="full-width">
                                             <mat-label>Logradouro</mat-label>
@@ -177,38 +180,81 @@
                                         </mat-form-field>
                                     </td>
                                 </tr>
-                            </table>
 
-                            <table class="full-width" cellspacing="0">
+                            </table>
+                            <mat-divider></mat-divider>
+                            <table class="full-width">
                                 <tr>
                                     <td>
                                         <mat-form-field class="full-width">
-                                            <mat-label>Cidade</mat-label>
-                                            <ng-container formGroupName="endereco">
-                                                <input matInput placeholder="Ex. Aracaju" #cidade id="cidade" required
-                                                    name="cidade" formControlName="cidade">
+                                            <mat-label>Nome para contato</mat-label>
+                                            <ng-container formGroupName="contato">
+                                                <input matInput type="text" value="" name="nome" class="validate"
+                                                    formControlName="nome" />
                                             </ng-container>
                                         </mat-form-field>
                                     </td>
                                     <td>
                                         <mat-form-field class="full-width">
-                                            <mat-label>Estado</mat-label>
-                                            <ng-container formGroupName="endereco">
-                                                <input matInput placeholder="Ex. sergipe" #estado id="estado" name="uf"
-                                                    required formControlName="uf">
+                                            <mat-label>Telefone</mat-label>
+                                            <ng-container formGroupName="contato">
+                                                <input matInput type="tel" value="" name="telefone" class="validate"
+                                                    formControlName="telefone" />
                                             </ng-container>
                                         </mat-form-field>
                                     </td>
+                                    <td>
+                                        <mat-form-field class="full-width">
+                                            <mat-label>E-mail</mat-label>
+                                            <ng-container formGroupName="contato">
+                                                <input matInput type="email" value="" name="email" class="validate"
+                                                    formControlName="email" />
+                                            </ng-container>
+                                        </mat-form-field>
+                                    </td>
+
                                 </tr>
                             </table>
+
+
+
+                        </mat-card>
+                    </mat-tab>
+
+
+                    <mat-tab label="Enderecos">
+                        <mat-card class="half-width">
+                            <!--<tr>
+                                <td>
+                                    <mat-form-field class="full-width">
+                                        <mat-label>Tipo</mat-label>
+                                        <ng-container formGroupName="endereco">
+                                            <mat-select type="string" formControlName="tipo">
+                                                <mat-option value='Residencial'>Residencial</mat-option>
+                                                <mat-option value='Comercial'>Comercial</mat-option>
+                                            </mat-select>
+                                        </ng-container>
+
+                                    </mat-form-field>
+                                </td>
+                            </tr>
+                            
+
 
                             <button mat-raised-button color="primary"
                                 (click)="newEndereco(participanteForm.value.endereco)">
                                 Novo
                             </button>
-                            <button mat-mini-fab color="primary" (click)="addEndereco(participanteForm.value.endereco)">
+                            -->
+                            <button mat-mini-fab color="primary" (click)="adcionarEnderecoLista()">
                                 <mat-icon>add</mat-icon>
                             </button>
+
+                            <!-- 
+                                <button mat-mini-fab color="primary" (click)="addEndereco(participanteForm.value.endereco)">
+                                <mat-icon>add</mat-icon>
+                            </button>
+                             -->
 
                             <table class="table-Enderecos" mat-table [dataSource]="enderecos">
                                 <!-- Id Column 
@@ -288,42 +334,10 @@
 
                             <div class="contato-container">
 
-                                <mat-form-field>
-                                    <mat-label>Tipo</mat-label>
-                                    <ng-container formGroupName="contato">
-                                        <mat-select formControlName="tipo">
 
-                                            <mat-option value='Pessoal'>Pessoal</mat-option>
-                                            <mat-option value='Comercial'>Comercial</mat-option>
 
-                                        </mat-select>
-                                    </ng-container>
-                                </mat-form-field>
 
-                                <mat-form-field>
-                                    <mat-label>Nome</mat-label>
-                                    <ng-container formGroupName="contato">
-                                        <input matInput type="text" value="" name="nome" class="validate"
-                                            formControlName="nome" />
-                                    </ng-container>
-                                </mat-form-field>
-                                <mat-form-field>
-                                    <mat-label>Telefone</mat-label>
-                                    <ng-container formGroupName="contato">
-                                        <input matInput type="tel" value="" name="telefone" class="validate"
-                                            formControlName="telefone" />
-                                    </ng-container>
-                                </mat-form-field>
-                                <mat-form-field>
-                                    <mat-label>E-mail</mat-label>
-                                    <ng-container formGroupName="contato">
-                                        <input matInput type="email" value="" name="email" class="validate"
-                                            formControlName="email" />
-                                    </ng-container>
-                                </mat-form-field>
-
-                                <button mat-mini-fab color="primary"
-                                    (click)="addContato(participanteForm.value.contato)">
+                                <button mat-mini-fab color="primary" (click)="adcionarContatoLista()">
                                     <mat-icon>add</mat-icon>
                                 </button>
 

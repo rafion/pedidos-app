@@ -1,3 +1,5 @@
+import { ParticipanteContatoDialogComponent } from './../participante-contato-dialog/participante-contato-dialog.component';
+import { ParticipanteFormEnderecoDialogComponent } from './../participante-form-endereco-dialog/participante-form-endereco-dialog.component';
 import { Contato } from './../../../model/Contato';
 import { Endereco } from './../../../model/Endereco.model';
 import { Cep } from './../../../../shared/model/cep';
@@ -7,8 +9,9 @@ import { ConsultaCepService } from './../../../../shared/services/consulta-cep.s
 import { Router } from '@angular/router';
 import { Component, ComponentFactoryResolver, OnInit } from '@angular/core';
 //import { ThemePalette } from '@angular/material/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MASKS, NgBrazilValidators } from 'ng-brazil';
+import { MatDialog } from '@angular/material/dialog';
 
 //https://github.com/mariohmol/js-brasil
 //https://github.com/mariohmol/ng-brazil
@@ -26,6 +29,7 @@ export class ParticipanteCreateComponent implements OnInit {
   //cepmask = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
   public MASKS = MASKS;
 
+
   tipoContatos = ['Telefone', 'Email'];
   contatos: Contato[] = []; /* [
     { id: 1, tipo: 'PESSOAL', nome: 'Rafion', telefone: '79998063899', email: 'rafion.torres@gmail.com', favorito: false },
@@ -37,7 +41,7 @@ export class ParticipanteCreateComponent implements OnInit {
   displayedColumnsContato = ['tipo', 'nome', 'telefone', 'email', 'favorito', 'action']
 
   displayedColumnsEndereco = ['logradouro', 'numero', 'bairro', 'tipo', 'cidade', 'uf', 'action']
-
+  //endereco: Endereco;
   enderecos: Endereco[] = []; //= [
   // { id: 1, logradouro: 'Rua D', numero: '10', bairro: 'Centro', tipo: 'Residencial', cidade: 'Aracaju', uf: 'SE', favorito: false },
   //  { id: 2, logradouro: 'Rua F', numero: '10', bairro: 'Centro', tipo: 'Corporativo', cidade: 'Aracaju', uf: 'SE', favorito: false }
@@ -51,6 +55,7 @@ export class ParticipanteCreateComponent implements OnInit {
 
   participanteForm: FormGroup;
 
+
   //checkClienteControl: boolean = false;
 
   checkboxCliente = true;
@@ -63,6 +68,7 @@ export class ParticipanteCreateComponent implements OnInit {
     private formBuilder: FormBuilder,
     private cepService: ConsultaCepService,
     private participanteService: ParticipanteService,
+    private dialog: MatDialog
 
   ) { }
 
@@ -93,6 +99,9 @@ export class ParticipanteCreateComponent implements OnInit {
       dataNascimento: [null],
       cnpj: [null],
       inscricaoEstadual: [null],
+      // endereco: this.formBuilder.array([]),
+      //contacts: this.formBuilder.array([]),
+
 
       endereco: this.formBuilder.group({
         id: [null],
@@ -115,11 +124,45 @@ export class ParticipanteCreateComponent implements OnInit {
         favorio: [false]
       })
 
+
     })
 
     this.pessoas = this.getPessoa();
 
   }
+
+  createContatosFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      id: [null],
+      tipo: [null],
+      nome: [null],
+      telefone: [null],
+      email: [null],
+      favorio: [false]
+    })
+  }
+
+  createEnderecosFormGroup(): FormGroup {
+    return this.formBuilder.group({
+      id: [null],
+      cep: [null],
+      tipo: [null],
+      logradouro: [null],
+      bairro: [null],
+      numero: [null],
+      complemento: [null],
+      cidade: [null],
+      uf: [null],
+    })
+  }
+
+  ////adcionarContato() {
+  //   this.contacts = this.participanteForm.get('contato') as FormArray;
+  // this.contacts.push(this.createContatosFormGroup());
+
+  // }
+
+
 
   cepModel = new Cep();
 
@@ -128,8 +171,11 @@ export class ParticipanteCreateComponent implements OnInit {
     nome: '',
   };
 
+
+  endereco: Endereco = new Endereco();
+  contato: Contato = new Contato();
   /*
-  endereco: Endereco = {
+  {
     cep: '',
     logradouro: '',
     complemento: '',
@@ -142,7 +188,8 @@ export class ParticipanteCreateComponent implements OnInit {
     tipo: '',
     favorito: false
   };
-*/
+  */
+
 
 
 
@@ -167,7 +214,12 @@ export class ParticipanteCreateComponent implements OnInit {
         )
         */
 
+
     console.log(this.participanteForm.value)
+
+    this.participante = this.participanteForm.value;
+    console.log('objeto formulario:')
+    console.log(this.participante);
 
 
   }
@@ -188,6 +240,7 @@ export class ParticipanteCreateComponent implements OnInit {
     )
 
     console.log(this.participanteForm.value)
+
   }
 
   cancel(): void {
@@ -286,7 +339,6 @@ export class ParticipanteCreateComponent implements OnInit {
     console.log(this.contatos);
     console.log('tamanho do arry contatos: ')
     console.log(this.contatos.length);
-
     this.participanteForm.get('contato').reset();
     //refresh na tabela
     this.contatos = Array.from(this.contatos);
@@ -335,6 +387,62 @@ export class ParticipanteCreateComponent implements OnInit {
   }
 
 
+  adcionarEnderecoLista(): void {
+    const dialogRef = this.dialog.open(ParticipanteFormEnderecoDialogComponent, {
+      minWidth: '500px',
 
+      data: {
+        tipo: this.endereco.tipo, cep: this.endereco.cep, cidade: this.endereco.cidade,
+        uf: this.endereco.uf, bairro: this.endereco.bairro, logradouro: this.endereco.logradouro,
+        numero: this.endereco.numero, complemento: this.endereco.complemento
+      }
+
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result) {
+        this.endereco = result;
+        this.enderecos.push(this.endereco);
+        //this.participanteForm.get('endereco').reset();
+        //refresh na tabela
+        this.enderecos = Array.from(this.enderecos);
+        this.endereco = new Endereco();
+      }
+
+    });
+
+  }
+
+  adcionarContatoLista(): void {
+    const dialogRef = this.dialog.open(ParticipanteContatoDialogComponent, {
+      minWidth: '500px',
+
+      data: {
+        tipo: this.contato.tipo,
+        nome: this.contato.nome,
+        telefone: this.contato.telefone,
+        email: this.contato.email
+
+      }
+
+
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+
+      if (result) {
+        this.contato = result;
+        this.contatos.push(this.contato);
+        //this.participanteForm.get('endereco').reset();
+        //refresh na tabela
+        this.contatos = Array.from(this.contatos);
+        this.contato = new Contato();
+      }
+
+    });
+
+  }
 
 }

@@ -9,7 +9,7 @@ export class Participante {
     inscricaoEstadual?: string
     ativo?: boolean;
     dataNascimento?: Date;
-    endereco?: Endereco;
-    contato?: Contato;
+    enderecos?: Endereco;
+    contatos?: Contato;
 
 }

@@ -1,5 +1,5 @@
 
-export interface Endereco {
+export class Endereco {
     id?: number;
     cep?: string;
     logradouro: string;
@@ -12,5 +12,21 @@ export interface Endereco {
     numero: string;
     tipo: string;
     favorito: boolean;
+
+    constructor() {
+
+        this.cep = '',
+            this.logradouro = '',
+            this.complemento = '',
+            this.bairro = '',
+            this.cidade = '',
+            this.uf = '',
+            this.ibge = '',
+            this.ddd = '',
+            this.numero = '',
+            this.tipo = '',
+            this.favorito = false
+
+    }
 
 }

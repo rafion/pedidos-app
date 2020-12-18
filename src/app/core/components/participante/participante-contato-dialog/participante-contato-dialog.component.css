@@ -1,0 +1,17 @@
+.full-width {
+    width: 100%;
+  }
+  table {
+    width: 100%;
+  }
+  
+  td {
+    padding-right: 8px;
+  }
+
+  
+
+  mat-form-field{
+    padding-right: 8px;
+    /*width: 100%; */
+  }

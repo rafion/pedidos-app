@@ -1,0 +1,46 @@
+<h1 mat-dialog-title>Novo Contato</h1>
+<div mat-dialog-content>
+
+    <mat-form-field>
+        <mat-label>Tipo</mat-label>
+        <mat-select [(ngModel)]='contato.tipo'>
+            <mat-option value='Pessoal'>Pessoal</mat-option>
+            <mat-option value='Comercial'>Comercial</mat-option>
+        </mat-select>
+    </mat-form-field>
+    <table class="full-width">
+        <tr>
+            <td>
+                <mat-form-field class="full-width">
+                    <mat-label>Nome para contato</mat-label>
+
+                    <input matInput type="text" value="" name="nome" class="validate" [(ngModel)]='contato.nome' />
+
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="full-width">
+                    <mat-label>Telefone</mat-label>
+
+                    <input matInput type="tel" value="" name="telefone" class="validate"
+                        [(ngModel)]='contato.telefone' />
+
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="full-width">
+                    <mat-label>E-mail</mat-label>
+
+                    <input matInput type="email" value="" name="email" class="validate" [(ngModel)]='contato.email' />
+
+                </mat-form-field>
+            </td>
+
+        </tr>
+    </table>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="primary" [mat-dialog-close]="contato" cdkFocusInitial>Adcionar</button>
+    <button mat-button (click)="cancel()">Cancelar</button>
+</div>

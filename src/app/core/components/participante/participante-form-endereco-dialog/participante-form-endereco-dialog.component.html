@@ -1,0 +1,99 @@
+<h1 mat-dialog-title>Adcionar Novo Endereço</h1>
+<div mat-dialog-content>
+
+    <mat-form-field>
+        <mat-label>Tipo</mat-label>
+        <ng-container>
+            <mat-select type="string" [(ngModel)]="endereco.tipo">
+                <mat-option value='Residencial'>Residencial</mat-option>
+                <mat-option value='Comercial'>Comercial</mat-option>
+            </mat-select>
+        </ng-container>
+
+    </mat-form-field>
+    <table class="full-width" cellspacing="0">
+        <tr>
+
+            <td>
+                <mat-form-field class="full-width">
+                    <mat-label for="cep">CEP</mat-label>
+                    <ng-container>
+                        <input matInput type="text" mask="00000-000" maxlength="16" size="16" #cep id="cep" name="cep"
+                            placeholder="Ex. 49000000" [(ngModel)]="endereco.cep"
+                            (blur)="consultaCEP($event.target.value)">
+                    </ng-container>
+                    <!--  <mat-hint align="end">{{cep.value.length}} / 8</mat-hint>-->
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="full-width">
+                    <mat-label>Cidade</mat-label>
+                    <ng-container>
+                        <input matInput placeholder="Ex. Aracaju" #cidade id="cidade" required name="cidade"
+                            [(ngModel)]="endereco.cidade">
+                    </ng-container>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="full-width">
+                    <mat-label>Estado</mat-label>
+                    <ng-container>
+                        <input matInput placeholder="Ex. sergipe" #estado id="estado" name="uf" required
+                            [(ngModel)]="endereco.uf">
+                    </ng-container>
+                </mat-form-field>
+            </td>
+
+            <td>
+                <mat-form-field class="full-width">
+                    <mat-label>Bairro</mat-label>
+                    <ng-container>
+                        <input matInput placeholder="Ex. Av. sao joao" #bairro id="bairro" required type="text"
+                            name="bairro" [(ngModel)]="endereco.bairro">
+                    </ng-container>
+                </mat-form-field>
+            </td>
+
+
+        </tr>
+
+        <tr>
+
+            <td>
+                <mat-form-field class="full-width">
+                    <mat-label>Logradouro</mat-label>
+                    <ng-container>
+                        <input matInput placeholder="Ex. Av. sao joao" #logradouro required id="logradouro" type="text"
+                            name="logradouro" [(ngModel)]="endereco.logradouro">
+                    </ng-container>
+                </mat-form-field>
+            </td>
+
+            <td>
+                <mat-form-field class="full-width">
+                    <mat-label>Numero</mat-label>
+                    <ng-container>
+                        <input matInput maxlength="6" size="6" type="text" #numero id="numero" required name="numero"
+                            [(ngModel)]="endereco.numero">
+                    </ng-container>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="full-width">
+                    <mat-label>Complemento</mat-label>
+                    <ng-container>
+                        <input matInput maxlength="20" #complemento id="complemento" name="complemento"
+                            [(ngModel)]="endereco.complemento">
+                    </ng-container>
+                </mat-form-field>
+            </td>
+        </tr>
+
+    </table>
+
+</div>
+<div mat-dialog-actions>
+    <button mat-raised-button color="primary" [mat-dialog-close]="endereco" cdkFocusInitial>Adcionar</button>
+    <button mat-button (click)="cancel()">Cancelar</button>
+
+</div>
