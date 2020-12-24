@@ -1,4 +1,4 @@
-import { Contato } from '../../model/Contato';
+import { Contato } from '../../model/Contato.model';
 import { Participante } from './../../model/Participante.model';
 export const PARTICIPANTE: Participante[] =
     [

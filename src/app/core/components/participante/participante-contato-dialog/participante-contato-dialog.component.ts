@@ -1,5 +1,5 @@
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { Contato } from './../../../model/Contato';
+import { Contato } from '../../../model/Contato.model';
 import { Component, OnInit, Inject } from '@angular/core';
 
 @Component({
@@ -16,6 +16,7 @@ export class ParticipanteContatoDialogComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.contato.tipo = 'PESSOAL'
   }
 
 

@@ -32,7 +32,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 
 import { NgxMaskModule } from 'ngx-mask';
 import { NgBrazil } from 'ng-brazil';
-import { ParticipanteFormEnderecoDialogComponent } from './participante-form-endereco-dialog/participante-form-endereco-dialog.component';
+import { ParticipanteEnderecoDialogComponent } from './participante-endereco-dialog/participante-endereco-dialog.component';
 import { ParticipanteContatoDialogComponent } from './participante-contato-dialog/participante-contato-dialog.component'
 
 
@@ -42,7 +42,7 @@ import { ParticipanteContatoDialogComponent } from './participante-contato-dialo
     ParticipanteReadComponent,
     ParticipanteCreateComponent,
     ParticipanteDeleteComponent,
-    ParticipanteFormEnderecoDialogComponent,
+    ParticipanteEnderecoDialogComponent,
     ParticipanteContatoDialogComponent
   ],
   imports: [

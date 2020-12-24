@@ -1,6 +1,6 @@
 import { ParticipanteContatoDialogComponent } from './../participante-contato-dialog/participante-contato-dialog.component';
-import { ParticipanteFormEnderecoDialogComponent } from './../participante-form-endereco-dialog/participante-form-endereco-dialog.component';
-import { Contato } from './../../../model/Contato';
+import { ParticipanteEnderecoDialogComponent } from './../participante-endereco-dialog/participante-endereco-dialog.component';
+import { Contato } from '../../../model/Contato.model';
 import { Endereco } from './../../../model/Endereco.model';
 import { Cep } from './../../../../shared/model/cep';
 import { Participante } from '../../../model/Participante.model';
@@ -26,14 +26,13 @@ export class ParticipanteCreateComponent implements OnInit {
 
   myModel: any;
 
-  //cepmask = [/\d/, /\d/, /\d/, /\d/, /\d/, '-', /\d/, /\d/, /\d/];
   public MASKS = MASKS;
 
   cepModel = new Cep();
   participante: Participante = new Participante();
   endereco: Endereco = new Endereco();
   contato: Contato = new Contato();
-  tipoContatos = ['Telefone', 'Email'];
+
   contatos: Contato[] = [];
 
   displayedColumnsContato = ['tipo', 'nome', 'telefone', 'email', 'favorito', 'action']
@@ -77,22 +76,24 @@ export class ParticipanteCreateComponent implements OnInit {
       endereco: this.formBuilder.group({
         id: [null],
         cep: [null],
-        tipo: [null],
+        tipo: ['RESIDENCIAL'],
         logradouro: [null],
         bairro: [null],
         numero: [null],
         complemento: [null],
         cidade: [null],
+        cidade_id: [null],
         uf: [null],
+        favorito: [true]
       }),
 
       contato: this.formBuilder.group({
         id: [null],
-        tipo: [null],
+        tipo: ['PESSOAL'],
         nome: [null],
         telefone: [null],
         email: [null],
-        favorio: [false]
+        favorito: [true]
       })
     })
 
@@ -133,53 +134,46 @@ export class ParticipanteCreateComponent implements OnInit {
   // }
 
 
-
-
-  /*
-  {
-    cep: '',
-    logradouro: '',
-    complemento: '',
-    bairro: '',
-    cidade: '',
-    uf: '',
-    ibge: '',
-    ddd: '',
-    numero: '',
-    tipo: '',
-    favorito: false
-  };
-  */
-
   onSubmit() {
-    /*
-        this.participanteService.create(this.participanteForm.value).subscribe(response => {
-          this.success = true;
-          this.participanteService.showMessage('Participante criado!', false);
-          this.participante = new Participante;
-          this.router.navigate(['/participantes'])
-          console.log(response);
-        }, errorResponse => {
-          this.success = false;
-          this.errors = errorResponse.error.message;
-          this.participanteService.showMessage(errorResponse.error.message, true)
-          //console.log(errorResponse.error.message) //acessando a magen de erro da api
-        }
-        )
-        */
+
+    if (this.participanteForm.valid) {
+
+      //transferir form para as classes
+      this.participante = this.participanteForm.value.participante;
+      this.contatos.push(this.participanteForm.value.contato);
+      this.enderecos.push(this.participanteForm.value.endereco)
+
+      this.participante.contatos = this.contatos;
+      this.participante.enderecos = this.enderecos;
+
+      //atualiza tabelas
+      this.contatos = Array.from(this.contatos);
+      this.enderecos = Array.from(this.enderecos);
+
+      console.log('objeto formulario:')
+      console.log(this.participante);
+      //console.log(this.participante.enderecos);
+      console.log(this.participanteForm.value);
+
+
+      this.participanteService.create(this.participante).subscribe(response => {
+        this.success = true;
+        this.participanteService.showMessage('Participante Salvo Com sucesso!!', false);
+        //this.participante = new Participante;
+        // this.router.navigate(['/participantes'])
+        console.log(response);
+      }, errorResponse => {
+        this.success = false;
+        this.errors = errorResponse.error.message;
+        this.participanteService.showMessage(errorResponse.error.message, true)
+        //console.log(errorResponse.error.message) //acessando a magen de erro da api
+      }
+      )
+    } else {
+      this.participanteService.showMessage('Preencha corretamente o formulario!', true)
+    }
     //console.log(this.participanteForm.value)
-    this.participante = this.participanteForm.value.participante;
-    this.contatos.push(this.participanteForm.value.contato);
-    this.enderecos.push(this.participanteForm.value.endereco)
 
-    this.participante.contatos = this.contatos;
-    this.participante.enderecos = this.enderecos;
-
-    console.log('objeto formulario:')
-    console.log(this.participante);
-    console.log(this.contatos);
-    console.log(this.enderecos);
-    console.log(this.participante);
   }
 
   createParticipante(): void {
@@ -208,6 +202,10 @@ export class ParticipanteCreateComponent implements OnInit {
 
   limparFom() {
     this.participanteForm.reset();
+    this.participante = new Participante();
+    this.enderecos = [];
+    this.contatos = [];
+
   }
 
   consultaCEP(cep) {
@@ -228,17 +226,16 @@ export class ParticipanteCreateComponent implements OnInit {
           //preenche o formulario e passao o value
           this.participanteForm.get('endereco.logradouro').setValue(this.cepModel.logradouro);
           this.participanteForm.get('endereco.cidade').setValue(this.cepModel.localidade);
+          this.participanteForm.get('endereco.cidade_id').setValue(this.cepModel.ibge);
           this.participanteForm.get('endereco.uf').setValue(this.cepModel.uf);
           this.participanteForm.get('endereco.bairro').setValue(this.cepModel.bairro);
 
-          console.log('entrou no response');
         } else {
           alert('CEP não encontrado, informe um CEP valido')
         }
       },
         erro => alert('Cep não encontrado!')
       );
-      //console.log(this.cepService.consultaCEP(cep))
 
     } else {
       //cep sem valor, limpa formulário.
@@ -270,7 +267,6 @@ export class ParticipanteCreateComponent implements OnInit {
 
 
   mask: string = '00.000.0000-00';
-
   cpf_cnpj: string;
 
 
@@ -286,7 +282,7 @@ export class ParticipanteCreateComponent implements OnInit {
     // this.service.favourite(contato).subscribe(response => {
     // contato.favorito = !contato.favorito;
     // })
-    console.log("contato favotitado!");
+    console.log("contato favoritado!");
 
   }
 
@@ -350,13 +346,14 @@ export class ParticipanteCreateComponent implements OnInit {
 
 
   adcionarEnderecoLista(): void {
-    const dialogRef = this.dialog.open(ParticipanteFormEnderecoDialogComponent, {
+    const dialogRef = this.dialog.open(ParticipanteEnderecoDialogComponent, {
       minWidth: '500px',
 
       data: {
         id: this.endereco.id,
         tipo: this.endereco.tipo,
         cep: this.endereco.cep,
+        id_cidade: this.endereco.cidade_id,
         cidade: this.endereco.cidade,
         uf: this.endereco.uf,
         bairro: this.endereco.bairro,

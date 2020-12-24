@@ -4,8 +4,8 @@
     <mat-form-field>
         <mat-label>Tipo</mat-label>
         <mat-select [(ngModel)]='contato.tipo'>
-            <mat-option value='Pessoal'>Pessoal</mat-option>
-            <mat-option value='Comercial'>Comercial</mat-option>
+            <mat-option value='PESSOAL'>Pessoal</mat-option>
+            <mat-option value='COMERCIAL'>Comercial</mat-option>
         </mat-select>
     </mat-form-field>
     <table class="full-width">
@@ -22,7 +22,7 @@
                 <mat-form-field class="full-width">
                     <mat-label>Telefone</mat-label>
 
-                    <input matInput type="tel" value="" name="telefone" class="validate"
+                    <input matInput type="tel" mask="(00)00000-0000" value="" name="telefone" class="validate"
                         [(ngModel)]='contato.telefone' />
 
                 </mat-form-field>

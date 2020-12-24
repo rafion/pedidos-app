@@ -6,6 +6,7 @@ import { environment } from './../../../environments/environment';
 import { Injectable } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { HttpClient } from '@angular/common/http';
+import { ParticipanteResumoDTO } from '../components/participante/participante-read/participante-resumo.model';
 
 @Injectable({
   providedIn: 'root'
@@ -26,15 +27,22 @@ export class ParticipanteService {
   //pipe com um map para tratar o erro na criação do produto, se ocorrer
   create(participante: Participante): Observable<Participante> {
     return this.http.post<Participante>(`${this.apiURL}`, participante)
-    //.pipe(
-    // map((obj) => obj),
-    //  catchError(e => this.errorHandler(e)) //pega o erro "e" e passa para função
-    // );
+      .pipe(
+        map((obj) => obj),
+        catchError(e => this.errorHandler(e)) //pega o erro "e" e passa para função
+      );
 
   }
 
   read(): Observable<Participante[]> {
     return this.http.get<Participante[]>(this.apiURL).pipe(
+      map((obj) => obj),
+      catchError(e => this.errorHandler(e))
+    );
+  }
+
+  readTable(): Observable<ParticipanteResumoDTO[]> {
+    return this.http.get<ParticipanteResumoDTO[]>(this.apiURL).pipe(
       map((obj) => obj),
       catchError(e => this.errorHandler(e))
     );
@@ -50,7 +58,7 @@ export class ParticipanteService {
 
   showMessage(msg: string, isError: boolean = false): void {
     this.snackBar.open(msg, 'X', {
-      duration: 3000,
+      duration: 4000,
       horizontalPosition: "right",
       verticalPosition: "top",
       panelClass: isError ? ['msg-error'] : ['msg-success'] //classes permitidas, no casso a da msg de sucesso verde

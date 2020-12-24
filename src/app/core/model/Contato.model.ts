@@ -6,6 +6,7 @@ export class Contato {
     telefone: string;
     email?: string;
     favorito: boolean;
+    participanteId?: number;
 
     constructor() {
         this.id = null;
@@ -15,4 +16,10 @@ export class Contato {
         this.email = ''
         this.favorito = false;
     }
+    static tipo = {
+        pessoal: 'PESSOAL',
+        comercial: 'COMERCIAL'
+    }
+
+
 }

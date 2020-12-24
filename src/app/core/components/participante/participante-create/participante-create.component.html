@@ -120,8 +120,8 @@
                                             <mat-label>Tipo</mat-label>
                                             <ng-container formGroupName="endereco">
                                                 <mat-select type="string" formControlName="tipo">
-                                                    <mat-option value='Residencial'>Residencial</mat-option>
-                                                    <mat-option value='Comercial'>Comercial</mat-option>
+                                                    <mat-option value='RESIDENCIAL'>Residencial</mat-option>
+                                                    <mat-option value='COMERCIAL'>Comercial</mat-option>
                                                 </mat-select>
                                             </ng-container>
 
@@ -134,11 +134,22 @@
                                             <ng-container formGroupName="endereco">
                                                 <input matInput type="text" mask="00000-000" maxlength="16" size="16"
                                                     #cep id="cep" name="cep" (blur)="consultaCEP($event.target.value)"
-                                                    placeholder="Ex. 49000000" formControlName="cep">
+                                                    placeholder="Ex. 49000-000" formControlName="cep">
                                             </ng-container>
                                             <!--  <mat-hint align="end">{{cep.value.length}} / 8</mat-hint>-->
                                         </mat-form-field>
                                     </td>
+
+                                    <td>
+                                        <mat-form-field class="full-width">
+                                            <mat-label>Cod. Cidade</mat-label>
+                                            <ng-container formGroupName="endereco">
+                                                <input matInput placeholder="Ex. 2800308" #id_cidade id="cidade_id"
+                                                    name="cidade_id" formControlName="cidade_id">
+                                            </ng-container>
+                                        </mat-form-field>
+                                    </td>
+
                                     <td>
                                         <mat-form-field class="full-width">
                                             <mat-label>Cidade</mat-label>
@@ -215,8 +226,8 @@
                                             <mat-label>Tipo Contato</mat-label>
                                             <ng-container formGroupName="contato">
                                                 <mat-select type="string" formControlName="tipo">
-                                                    <mat-option value='Pessoal'>Pessoal</mat-option>
-                                                    <mat-option value='Comercial'>Comercial</mat-option>
+                                                    <mat-option value='PESSOAL'>Pessoal</mat-option>
+                                                    <mat-option value='COMERCIAL'>Comercial</mat-option>
                                                 </mat-select>
                                             </ng-container>
 
@@ -236,8 +247,8 @@
                                         <mat-form-field class="full-width">
                                             <mat-label>Telefone</mat-label>
                                             <ng-container formGroupName="contato">
-                                                <input matInput type="tel" value="" name="telefone" class="validate"
-                                                    formControlName="telefone" />
+                                                <input matInput type="tel" mask="(00)00000-0000" value=""
+                                                    name="telefone" class="validate" formControlName="telefone" />
                                             </ng-container>
                                         </mat-form-field>
                                     </td>

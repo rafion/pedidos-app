@@ -1,16 +1,16 @@
-import { Endereco } from './../../../model/Endereco.model';
-import { Cep } from './../../../../shared/model/cep';
-import { ConsultaCepService } from './../../../../shared/services/consulta-cep.service';
+import { Endereco } from '../../../model/Endereco.model';
+import { Cep } from '../../../../shared/model/cep';
+import { ConsultaCepService } from '../../../../shared/services/consulta-cep.service';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 
 @Component({
-  selector: 'app-participante-form-endereco-dialog',
-  templateUrl: './participante-form-endereco-dialog.component.html',
-  styleUrls: ['./participante-form-endereco-dialog.component.css']
+  selector: 'app-participante-endereco-dialog',
+  templateUrl: './participante-endereco-dialog.component.html',
+  styleUrls: ['./participante-endereco-dialog.component.css']
 })
-export class ParticipanteFormEnderecoDialogComponent implements OnInit {
+export class ParticipanteEnderecoDialogComponent implements OnInit {
 
   // public enderecoForm: FormGroup;
   private cepModel: Cep;
@@ -18,20 +18,27 @@ export class ParticipanteFormEnderecoDialogComponent implements OnInit {
 
 
   constructor(
-    public dialogRef: MatDialogRef<ParticipanteFormEnderecoDialogComponent>,
+    public dialogRef: MatDialogRef<ParticipanteEnderecoDialogComponent>,
     private cepService: ConsultaCepService,
     @Inject(MAT_DIALOG_DATA) public endereco: Endereco
 
   ) { }
 
-  ngOnInit(): void {
 
+
+
+
+
+
+  ngOnInit(): void {
+    this.endereco.tipo = 'RESIDENCIAL';
 
   }
 
   cancel(): void {
     this.dialogRef.close();
   }
+
 
 
   consultaCEP(cep) {
@@ -45,6 +52,7 @@ export class ParticipanteFormEnderecoDialogComponent implements OnInit {
 
           this.endereco.logradouro = this.cepModel.logradouro;
           this.endereco.cidade = this.cepModel.localidade;
+          this.endereco.cidade_id = this.cepModel.ibge;
           this.endereco.uf = this.cepModel.uf;
           this.endereco.bairro = this.cepModel.bairro;
 

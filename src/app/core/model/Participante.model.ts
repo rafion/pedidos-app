@@ -1,4 +1,4 @@
-import { Contato } from './Contato';
+import { Contato } from './Contato.model';
 import { Endereco } from './Endereco.model';
 export class Participante {
     id?: number;

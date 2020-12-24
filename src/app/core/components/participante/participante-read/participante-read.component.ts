@@ -2,6 +2,7 @@ import { ParticipanteService } from './../../../service/participante.service';
 import { PARTICIPANTE } from './../participante.mock';
 import { Participante } from './../../../model/Participante.model';
 import { Component, OnInit } from '@angular/core';
+import { ParticipanteResumoDTO } from './participante-resumo.model';
 
 @Component({
   selector: 'app-participante-read',
@@ -11,14 +12,16 @@ import { Component, OnInit } from '@angular/core';
 export class ParticipanteReadComponent implements OnInit {
 
   participantes: Participante[]; // = PARTICIPANTE;
-  displayedColumns = ['id', 'nome', 'contato', 'action'];
+  participanteResumoDTO: ParticipanteResumoDTO[];
+  displayedColumns = ['id', 'nome', 'cidade', 'telefone', 'action'];
 
 
   constructor(private participanteService: ParticipanteService) { }
 
   ngOnInit(): void {
-    this.participanteService.read().subscribe(participantes => {
-      this.participantes = participantes
+    this.participanteService.readTable().subscribe(participantes => {
+      this.participanteResumoDTO = participantes
+      //console.log(this.participantes)
     })
 
   }

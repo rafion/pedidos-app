@@ -5,8 +5,8 @@
         <mat-label>Tipo</mat-label>
         <ng-container>
             <mat-select type="string" [(ngModel)]="endereco.tipo">
-                <mat-option value='Residencial'>Residencial</mat-option>
-                <mat-option value='Comercial'>Comercial</mat-option>
+                <mat-option value='RESIDENCIAL'>Residencial</mat-option>
+                <mat-option value='COMERCIAL'>Comercial</mat-option>
             </mat-select>
         </ng-container>
 
@@ -36,6 +36,15 @@
             </td>
             <td>
                 <mat-form-field class="full-width">
+                    <mat-label>Cod. Cidade</mat-label>
+                    <ng-container>
+                        <input matInput placeholder="Ex. 2800308" #id_cidade id="cidade_id" name="cidade_id"
+                            [(ngModel)]="endereco.cidade_id">
+                    </ng-container>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="full-width">
                     <mat-label>Estado</mat-label>
                     <ng-container>
                         <input matInput placeholder="Ex. sergipe" #estado id="estado" name="uf" required
@@ -44,20 +53,13 @@
                 </mat-form-field>
             </td>
 
-            <td>
-                <mat-form-field class="full-width">
-                    <mat-label>Bairro</mat-label>
-                    <ng-container>
-                        <input matInput placeholder="Ex. Av. sao joao" #bairro id="bairro" required type="text"
-                            name="bairro" [(ngModel)]="endereco.bairro">
-                    </ng-container>
-                </mat-form-field>
-            </td>
+
 
 
         </tr>
 
         <tr>
+
 
             <td>
                 <mat-form-field class="full-width">
@@ -65,6 +67,15 @@
                     <ng-container>
                         <input matInput placeholder="Ex. Av. sao joao" #logradouro required id="logradouro" type="text"
                             name="logradouro" [(ngModel)]="endereco.logradouro">
+                    </ng-container>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field class="full-width">
+                    <mat-label>Bairro</mat-label>
+                    <ng-container>
+                        <input matInput placeholder="Ex. Av. sao joao" #bairro id="bairro" required type="text"
+                            name="bairro" [(ngModel)]="endereco.bairro">
                     </ng-container>
                 </mat-form-field>
             </td>
