@@ -51,8 +51,8 @@ export class ParticipanteEnderecoDialogComponent implements OnInit {
         if (this.cepModel.localidade != null) {
 
           this.endereco.logradouro = this.cepModel.logradouro;
-          this.endereco.cidade = this.cepModel.localidade;
-          this.endereco.cidade_id = this.cepModel.ibge;
+          this.endereco.municipio = this.cepModel.localidade;
+          this.endereco.codigo_ibge = this.cepModel.ibge;
           this.endereco.uf = this.cepModel.uf;
           this.endereco.bairro = this.cepModel.bairro;
 

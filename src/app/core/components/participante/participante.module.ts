@@ -5,7 +5,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 import { MatInputModule } from '@angular/material/input';
-import { ParticipanteDeleteComponent } from './participante-delete/participante-delete.component';
+import { ParticipanteDeleteDialogComponent } from './participante-delete-dialog/participante-delete-dialog.component';
 import { ParticipanteCreateComponent } from './participante-create/participante-create.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -41,7 +41,7 @@ import { ParticipanteContatoDialogComponent } from './participante-contato-dialo
     ParticipanteUpdateComponent,
     ParticipanteReadComponent,
     ParticipanteCreateComponent,
-    ParticipanteDeleteComponent,
+    ParticipanteDeleteDialogComponent,
     ParticipanteEnderecoDialogComponent,
     ParticipanteContatoDialogComponent
   ],

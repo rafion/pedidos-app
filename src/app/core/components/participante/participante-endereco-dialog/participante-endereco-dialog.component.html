@@ -29,8 +29,8 @@
                 <mat-form-field class="full-width">
                     <mat-label>Cidade</mat-label>
                     <ng-container>
-                        <input matInput placeholder="Ex. Aracaju" #cidade id="cidade" required name="cidade"
-                            [(ngModel)]="endereco.cidade">
+                        <input matInput placeholder="Ex. Aracaju" #cidade id="municipio" required name="municipio"
+                            [(ngModel)]="endereco.municipio">
                     </ng-container>
                 </mat-form-field>
             </td>
@@ -38,8 +38,8 @@
                 <mat-form-field class="full-width">
                     <mat-label>Cod. Cidade</mat-label>
                     <ng-container>
-                        <input matInput placeholder="Ex. 2800308" #id_cidade id="cidade_id" name="cidade_id"
-                            [(ngModel)]="endereco.cidade_id">
+                        <input matInput placeholder="Ex. 2800308" #id_cidade id="codigo_ibge" name="codigo_ibge"
+                            [(ngModel)]="endereco.codigo_ibge">
                     </ng-container>
                 </mat-form-field>
             </td>

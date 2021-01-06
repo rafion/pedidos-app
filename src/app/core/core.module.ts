@@ -1,3 +1,4 @@
+import { SharedModule } from './../shared/shared.module';
 
 import { ReactiveFormsModule } from '@angular/forms'
 import { FormsModule } from '@angular/forms';
@@ -30,6 +31,7 @@ import { NgxMaskModule } from 'ngx-mask'
     ReactiveFormsModule,
     FormsModule,
     NgxMaskModule.forRoot(),
+    SharedModule,
 
 
 

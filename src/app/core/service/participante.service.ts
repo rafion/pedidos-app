@@ -27,10 +27,11 @@ export class ParticipanteService {
   //pipe com um map para tratar o erro na criação do produto, se ocorrer
   create(participante: Participante): Observable<Participante> {
     return this.http.post<Participante>(`${this.apiURL}`, participante)
-      .pipe(
-        map((obj) => obj),
-        catchError(e => this.errorHandler(e)) //pega o erro "e" e passa para função
-      );
+    /* .pipe(
+      map((obj) => obj),
+      catchError(e => this.errorHandler(e)) //pega o erro "e" e passa para função
+    );
+    */
 
   }
 
@@ -50,10 +51,16 @@ export class ParticipanteService {
 
   readById(id: number): Observable<Participante> {
     const url = `${this.apiURL}/${id}`;
-    return this.http.get<Participante>(url).pipe(
-      map((obj) => obj),
-      catchError(e => this.errorHandler(e))
-    );
+    return this.http.get<Participante>(url)
+      .pipe(
+        map((obj) => obj),
+        catchError(e => this.errorHandler(e))
+      );
+
+  }
+
+  deleteById(id: number): Observable<any> {
+    return this.http.delete<any>(`${this.apiURL}/${id}`);
   }
 
   showMessage(msg: string, isError: boolean = false): void {
@@ -64,11 +71,12 @@ export class ParticipanteService {
       panelClass: isError ? ['msg-error'] : ['msg-success'] //classes permitidas, no casso a da msg de sucesso verde
 
     });
+
   }
 
   errorHandler(e: any): Observable<any> {
     // console.log(e);
-    this.showMessage('Ocorreu um erro!', true);
+    this.showMessage('erro ao obter os contatos da API! ' + e, true);
     return EMPTY; //retorna um observable do tipo empty
   }
 

@@ -14,7 +14,7 @@ const routes: Routes = [
 
     { path: '', component: ParticipanteReadComponent },
     { path: 'new', component: ParticipanteCreateComponent },
-    { path: ':id/edit', component: ParticipanteCreateComponent },
+    { path: 'update/:id', component: ParticipanteCreateComponent },
 
 ];
 

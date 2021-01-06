@@ -5,9 +5,9 @@ export class Endereco {
     logradouro: string;
     complemento?: string;
     bairro: string;
-    cidade: string;
+    municipio: string;
+    codigo_ibge: string;
     uf: string;
-    cidade_id?: string;
     ddd?: string;
     numero: string;
     tipo: string;
@@ -20,9 +20,9 @@ export class Endereco {
             this.logradouro = '',
             this.complemento = '',
             this.bairro = '',
-            this.cidade = '',
-            this.uf = '',
-            this.cidade_id = '',
+            this.municipio = '',
+            this.codigo_ibge = '';
+        this.uf = '',
             this.ddd = '',
             this.numero = '',
             this.tipo = '',

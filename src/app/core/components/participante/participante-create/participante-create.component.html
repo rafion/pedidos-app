@@ -48,14 +48,24 @@
                     <mat-tab label="Cadastro">
                         <mat-card class="half-width">
 
-                            <table class="full-width" cellspacing="0">
+
+
+                            <table class="full-width">
                                 <tr>
+                                    <td *ngIf="participante.id">
+                                        <ng-container formGroupName="participante">
+                                            <mat-form-field class="min-width" class="full-width">
+                                                <mat-label>ID</mat-label>
+                                                <input matInput disabled name="id" formControlName='id'>
+                                            </mat-form-field>
+                                        </ng-container>
+                                    </td>
                                     <td>
                                         <ng-container formGroupName="participante">
                                             <mat-form-field class="full-width">
                                                 <mat-label>Nome</mat-label>
-                                                <input matInput placeholder="Nome" name="nome" formControlName='nome'
-                                                    required>
+                                                <input matInput placeholder="Nome" #name name="nome"
+                                                    formControlName='nome' required [value]="name.value.toUpperCase()">
                                             </mat-form-field>
                                         </ng-container>
                                     </td>
@@ -64,7 +74,8 @@
                                             <mat-form-field class="full-width">
                                                 <mat-label>Nome fantasia</mat-label>
                                                 <input matInput placeholder="Nome Fantasia" name="nomeFantasia"
-                                                    formControlName="nomeFantasia">
+                                                    #nomeFantasia formControlName="nomeFantasia"
+                                                    [value]="nomeFantasia.value.toUpperCase()">
                                             </mat-form-field>
                                         </ng-container>
                                     </td>
@@ -140,34 +151,46 @@
                                         </mat-form-field>
                                     </td>
 
-                                    <td>
-                                        <mat-form-field class="full-width">
-                                            <mat-label>Cod. Cidade</mat-label>
-                                            <ng-container formGroupName="endereco">
-                                                <input matInput placeholder="Ex. 2800308" #id_cidade id="cidade_id"
-                                                    name="cidade_id" formControlName="cidade_id">
-                                            </ng-container>
-                                        </mat-form-field>
-                                    </td>
 
-                                    <td>
-                                        <mat-form-field class="full-width">
-                                            <mat-label>Cidade</mat-label>
-                                            <ng-container formGroupName="endereco">
-                                                <input matInput placeholder="Ex. Aracaju" #cidade id="cidade" required
-                                                    name="cidade" formControlName="cidade">
-                                            </ng-container>
-                                        </mat-form-field>
-                                    </td>
                                     <td>
                                         <mat-form-field class="full-width">
                                             <mat-label>Estado</mat-label>
                                             <ng-container formGroupName="endereco">
-                                                <input matInput placeholder="Ex. sergipe" #estado id="estado" name="uf"
-                                                    required formControlName="uf">
+
+                                                <mat-select type="string" id="estado" formControlName="uf">
+                                                    <mat-option *ngFor="let estado of estados " [value]="estado.uf">
+                                                        {{estado.nome}}
+                                                    </mat-option>
+
+                                                </mat-select>
                                             </ng-container>
                                         </mat-form-field>
                                     </td>
+                                    <td>
+                                        <mat-form-field class="full-width">
+                                            <mat-label>Cidade</mat-label>
+                                            <ng-container formGroupName="endereco">
+                                                <mat-select type="string" id="municipio" formControlName="municipio">
+                                                    <mat-option *ngFor="let municipio of municipios "
+                                                        [value]="municipio.nome"
+                                                        (click)="updateCodigoIbge(municipio.codigo_ibge)">
+                                                        {{municipio.nome}}
+                                                    </mat-option>
+
+                                                </mat-select>
+                                            </ng-container>
+                                        </mat-form-field>
+                                    </td>
+                                    <td *ngIf=false>
+                                        <mat-form-field class="full-width">
+                                            <mat-label>Cod. Ibge</mat-label>
+                                            <ng-container formGroupName="endereco">
+                                                <input matInput placeholder="Ex. 2800308" #codigo_ibge id="codigo_ibge"
+                                                    #codigo_ibge name="codigo_ibge" formControlName="codigo_ibge">
+                                            </ng-container>
+                                        </mat-form-field>
+                                    </td>
+
 
 
 
@@ -247,7 +270,8 @@
                                         <mat-form-field class="full-width">
                                             <mat-label>Telefone</mat-label>
                                             <ng-container formGroupName="contato">
-                                                <input matInput type="tel" mask="(00)00000-0000" value=""
+                                                <input matInput type="tel" #telefone
+                                                    [textMask]="{mask: MASKS.telefone.textMaskFunction}" value=""
                                                     name="telefone" class="validate" formControlName="telefone" />
                                             </ng-container>
                                         </mat-form-field>
@@ -257,7 +281,7 @@
                                             <mat-label>E-mail</mat-label>
                                             <ng-container formGroupName="contato">
                                                 <input matInput type="email" value="" name="email" class="validate"
-                                                    formControlName="email" />
+                                                    placeholder="Email do contato" formControlName="email" />
                                             </ng-container>
                                         </mat-form-field>
                                     </td>
@@ -339,6 +363,20 @@
                                 <ng-container matColumnDef="uf">
                                     <th mat-header-cell *matHeaderCellDef>Estado</th>
                                     <td mat-cell *matCellDef="let row">{{row.uf}}</td>
+                                </ng-container>
+
+                                <ng-container matColumnDef="favorito">
+                                    <th mat-header-cell *matHeaderCellDef>Favorito</th>
+                                    <td mat-cell *matCellDef="let contato">
+
+                                        <button mat-icon-button color="primary"
+                                            (click)="favoritarEndereco(participanteForm.value.endereco)">
+                                            <mat-icon>
+                                                {{ contato.favorito ? 'favorite' : 'favorite_border' }}
+                                            </mat-icon>
+                                        </button>
+
+                                    </td>
                                 </ng-container>
 
 
@@ -460,7 +498,7 @@
                 <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
                     Salvar
                 </button>
-                <button mat-raised-button color="accent" (click)="limparFom()">
+                <button mat-raised-button color="accent" (click)="limparForm()">
                     Novo
                 </button>
 
