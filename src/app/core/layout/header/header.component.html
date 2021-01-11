@@ -2,12 +2,16 @@
     <button type="button" mat-icon-button class="visible-sm" (click)="toggleSidebar()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
-    <div class="nav-brand">
-        <a [routerLink]="['/home']"> Pedidos APP -
-            <i class="material-icons">home</i>
-            Inicio
+    <span class="logo">
+        <a routerLink=''>Pedidos APP -</a>
+    </span>
+    <span class="nav-brand">
+
+        <a routerLink="{{routerUrl}}">
+            <i class="material-icons">{{icon}}</i>
+            {{title}}
         </a>
-    </div>
+    </span>
 
     <span class="nav-spacer"></span>
     <form class="hidden-sm" style="margin-left: 20px; margin-top: 5px">
@@ -40,7 +44,7 @@
         </button>
         <button mat-menu-item>
             <mat-icon>settings</mat-icon>
-            <span>{{ 'Settings'  }}</span>
+            <span>{{ 'Settings' }}</span>
         </button>
     </mat-menu>
     <button mat-icon-button (click)="onLoggedout()">

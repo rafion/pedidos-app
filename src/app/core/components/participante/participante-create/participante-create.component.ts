@@ -1,3 +1,4 @@
+import { HeaderService } from './../../../service/header.service';
 
 import { empty, Observable } from 'rxjs';
 import { Municipio } from './../../../../shared/model/Municipio.model';
@@ -61,52 +62,26 @@ export class ParticipanteCreateComponent implements OnInit {
     private cepService: ConsultaCepService,
     private participanteService: ParticipanteService,
     private dialog: MatDialog,
-    private dadosService: DadosService
-  ) { }
+    private dadosService: DadosService,
+    private headerService: HeaderService
+  ) {
+    headerService.headerData = {
+      title: this.activetedRouter.snapshot.paramMap.get('id') ? 'Clientes/Editar' : 'Clientes/Novo Cliente',
+      icon: 'people',
+      routerUrl: '/participantes'
+    }
+  }
 
   ngOnInit(): void {
 
-    this.participanteForm = this.formBuilder.group({
-      //https://github.com/mariohmol/ng-brazil
-      participante: this.formBuilder.group({
-        id: [null],
-        nome: ['', [Validators.required]],
-        nomeFantasia: [null],
-        cpf: [null, [<any>NgBrazilValidators.cpf]],
-        dataNascimento: [null],
-        cnpj: [null, [<any>NgBrazilValidators.cnpj]],
-        inscricaoEstadual: [null],
-      }),
-      // endereco: this.formBuilder.array([]),
-      //contacts: this.formBuilder.array([]),
-      endereco: this.formBuilder.group({
-        id: [null],
-        cep: [null],
-        tipo: ['RESIDENCIAL'],
-        logradouro: [null],
-        bairro: [null],
-        numero: [null],
-        complemento: [null],
-        municipio: [null],
-        codigo_ibge: [null],
-        uf: [null],
-        favorito: [true]
-      }),
-      contato: this.formBuilder.group({
-        id: [null],
-        tipo: ['PESSOAL'],
-        nome: [null, Validators.required],
-        telefone: [null, <any>NgBrazilValidators.telefone],
-        email: [null, Validators.email],
-        favorito: [true]
-      })
-    })
-
-    this.pessoas = this.getPessoa();
     //this.estados = this.dadosService.getEstados();
     // foi criado uma forma melhor com o pipe async
     this.dadosService.getEstados()
       .subscribe(dados => { this.estados = dados }); //{ this.estados = dados; console.log(dados); });
+
+    this.initForm();
+
+    this.pessoas = this.getPessoa();
 
     this.participanteForm.get('endereco.uf').valueChanges
       .pipe(
@@ -121,8 +96,17 @@ export class ParticipanteCreateComponent implements OnInit {
     //pega o id da rota
     const id = +this.activetedRouter.snapshot.paramMap.get('id')
     if (id) {
+      this.participante.id = id;
       this.participanteService.readById(id).subscribe(dados =>
         this.updateForm(dados)
+        , errorResponse => {
+          if (errorResponse.status == 404) {
+            this.participanteService.showMessage('Cliente não encontrado!', true)
+            console.log('Participante não encontrado!');
+          }
+          this.participante = new Participante();
+
+        }
       );
     }
   }
@@ -158,7 +142,45 @@ export class ParticipanteCreateComponent implements OnInit {
   // this.contacts.push(this.createContatosFormGroup());
 
   // }
-
+  initForm() {
+    this.participanteForm = this.formBuilder.group({
+      //https://github.com/mariohmol/ng-brazil
+      participante: this.formBuilder.group({
+        id: [null],
+        nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
+        nomeFantasia: [null],
+        cpf: [null, [<any>NgBrazilValidators.cpf]],
+        dataNascimento: [null],
+        cnpj: [null, [<any>NgBrazilValidators.cnpj]],
+        inscricaoEstadual: [null],
+      }),
+      // endereco: this.formBuilder.array([]),
+      //contacts: this.formBuilder.array([]),
+      endereco: this.formBuilder.group({
+        id: [null],
+        cep: [null],
+        tipo: ['RESIDENCIAL'],
+        logradouro: [null],
+        bairro: [null],
+        numero: [null],
+        complemento: [null],
+        municipio: [null],
+        codigo_ibge: [null],
+        uf: [null],
+        favorito: [true],
+        participante: [null]
+      }),
+      contato: this.formBuilder.group({
+        id: [null],
+        tipo: ['PESSOAL'],
+        nome: [null, Validators.required],
+        telefone: [null, <any>NgBrazilValidators.telefone],
+        email: [null, Validators.email],
+        favorito: [true],
+        participante: [null]
+      })
+    })
+  }
 
   onSubmit() {
 
@@ -179,34 +201,58 @@ export class ParticipanteCreateComponent implements OnInit {
       // console.log(this.participante);
       //console.log(this.participante.enderecos);
       // console.log(this.participanteForm.value);
+      if (this.participante.id) {
+        console.log('participante com id ha enviar');
+        console.log(this.participante);
+        this.participanteService.update(this.participante).subscribe(response => {
+          this.success = true;
+          this.participanteService.showMessage('Participante Atualizado Com sucesso!!', false);
+          this.updateForm(response);
 
-      this.participanteService.create(this.participante).subscribe(response => {
-        this.success = true;
-        this.participanteService.showMessage('Participante Salvo Com sucesso!!', false);
-        this.updateForm(response);
-        // console.log('response ao salvar:');
-        // console.log(response);
-        //console.log('objeto participante carregado do response:');
-        //console.log(this.participante);
-        //this.participante = new Participante;
-        // this.router.navigate(['/participantes'])
+        }, errorResponse => {
+          //this.participanteService.showMessage('Erro ao atualizar Participante', true);
+          this.contatos.pop();
+          this.enderecos.pop();
+          this.contatos = Array.from(this.contatos);
+          this.enderecos = Array.from(this.enderecos);
+          this.success = false;
+          this.errors = errorResponse.error.message;
+          this.participanteService.showMessage(errorResponse.error.message, true)
+        }
+        )
 
-      }, errorResponse => {
-        //remove o ultimo adicionado no array, o ultimo é o do formulario principal
-        this.contatos.pop();
-        this.enderecos.pop();
-        this.contatos = Array.from(this.contatos);
-        this.enderecos = Array.from(this.enderecos);
-        //remove o primeiro
-        //this.contatos.shift;
-        //this.enderecos.shift;
+      } else {
+        console.log('novo participante ha enviar');
+        console.log(this.participante);
+        this.participanteService.create(this.participante).subscribe(response => {
+          this.success = true;
+          this.participanteService.showMessage('Participante Salvo Com sucesso!!', false);
+          this.updateForm(response);
+          // console.log('response ao salvar:');
+          // console.log(response);
+          //console.log('objeto participante carregado do response:');
+          //console.log(this.participante);
+          //this.participante = new Participante;
+          // this.router.navigate(['/participantes'])
 
-        this.success = false;
-        this.errors = errorResponse.error.message;
-        this.participanteService.showMessage(errorResponse.error.message, true)
-        //console.log(errorResponse.error.message) //acessando a magen de erro da api
+        }, errorResponse => {
+          //remove o ultimo adicionado no array, o ultimo é o do formulario principal
+          this.contatos.pop();
+          this.enderecos.pop();
+          this.contatos = Array.from(this.contatos);
+          this.enderecos = Array.from(this.enderecos);
+          //remove o primeiro
+          //this.contatos.shift;
+          //this.enderecos.shift;
+
+          this.success = false;
+          this.errors = errorResponse.error.message;
+          this.participanteService.showMessage(errorResponse.error.message, true)
+          //console.log(errorResponse.error.message) //acessando a magen de erro da api
+        }
+        )
       }
-      )
+
     } else {
       this.participanteService.showMessage('Preencha corretamente o formulario!', true)
     }
@@ -214,6 +260,8 @@ export class ParticipanteCreateComponent implements OnInit {
   }
 
   updateForm(participante: Participante) {
+    console.log('dados retornados por id');
+    console.log(participante);
     // this.participante = participante;
 
     this.participante.id = participante.id;
@@ -250,7 +298,8 @@ export class ParticipanteCreateComponent implements OnInit {
         municipio: participante.enderecos[0].municipio,
         codigo_ibge: participante.enderecos[0].codigo_ibge,
         uf: participante.enderecos[0].uf,
-        favorito: participante.enderecos[0].favorito
+        favorito: participante.enderecos[0].favorito,
+        participante: participante.enderecos[0].participante
       },
       contato: {
         id: participante.contatos[0].id,
@@ -258,7 +307,8 @@ export class ParticipanteCreateComponent implements OnInit {
         nome: participante.contatos[0].nome,
         telefone: participante.contatos[0].telefone,
         email: participante.contatos[0].email,
-        favorito: participante.contatos[0].favorito
+        favorito: participante.contatos[0].favorito,
+        participante: participante.enderecos[0].participante
       }
 
 
@@ -266,33 +316,36 @@ export class ParticipanteCreateComponent implements OnInit {
   }
 
 
-
-  createParticipante(): void {
-    this.participanteService.create(this.participanteForm.value).subscribe(response => {
-      this.success = true;
-      this.participanteService.showMessage('Participante criado!', false);
-      this.participante = new Participante;
-      this.router.navigate(['/participantes'])
-      console.log(response);
-    }, errorResponse => {
-      this.success = false;
-      this.errors = errorResponse.error.message;
-      this.participanteService.showMessage(errorResponse.error.message, true)
-      //console.log(errorResponse.error.message) //acessando a magen de erro da api
+  /*
+    createParticipante(): void {
+      this.participanteService.create(this.participanteForm.value).subscribe(response => {
+        this.success = true;
+        this.participanteService.showMessage('Participante criado!', false);
+        this.participante = new Participante;
+        this.router.navigate(['/participantes'])
+        console.log(response);
+      }, errorResponse => {
+        this.success = false;
+        this.errors = errorResponse.error.message;
+        this.participanteService.showMessage(errorResponse.error.message, true)
+        //console.log(errorResponse.error.message) //acessando a magen de erro da api
+      }
+      )
+  
+      console.log(this.participanteForm.value)
+  
     }
-    )
-
-    console.log(this.participanteForm.value)
-
-  }
+  */
 
   cancel(): void {
     this.router.navigate(['/participantes'])
-    this.participanteForm.reset();
+    // this.participanteForm.reset();
+    // this.initForm();
   }
 
-  limparForm() {
-    this.participanteForm.reset();
+  resetForm() {
+    this.participanteForm.reset;
+    this.initForm();
     this.participante = new Participante();
     this.enderecos = [];
     this.contatos = [];
@@ -502,6 +555,13 @@ export class ParticipanteCreateComponent implements OnInit {
 
     });
 
+  }
+
+  capitalize(value: any) {
+    if (typeof value !== 'string') {
+      return '';
+    }
+    return value.charAt(0).toUpperCase() + value.slice(1);
   }
 
 }

@@ -12,7 +12,7 @@ export class Endereco {
     numero: string;
     tipo: string;
     favorito: boolean;
-    participanteId?: number;
+    participante?: number;
 
     constructor() {
         this.id = null,

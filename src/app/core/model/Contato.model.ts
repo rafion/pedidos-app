@@ -6,7 +6,7 @@ export class Contato {
     telefone: string;
     email?: string;
     favorito: boolean;
-    participanteId?: number;
+    participante?: number;
 
     constructor() {
         this.id = null;

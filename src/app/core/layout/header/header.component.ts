@@ -1,3 +1,4 @@
+import { HeaderService } from './../../service/header.service';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { Component, OnInit } from '@angular/core';
@@ -11,12 +12,22 @@ export class HeaderComponent implements OnInit {
 
   public pushRightClass: string;
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private headerService: HeaderService) {
     this.router.events.subscribe(val => {
       if (val instanceof NavigationEnd && window.innerWidth <= 992 && this.isToggled()) {
         this.toggleSidebar();
       }
     });
+  }
+
+  get title(): string {
+    return this.headerService.headerData.title
+  }
+  get icon(): string {
+    return this.headerService.headerData.icon
+  }
+  get routerUrl(): string {
+    return this.headerService.headerData.routerUrl
   }
 
   ngOnInit(): void {

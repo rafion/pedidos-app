@@ -74,8 +74,8 @@
     width: 98%;
   }
   
-  .example-full-width {
-    width: 100%;
+  .min-width {
+    width: 10%;
   }
 
   td {
