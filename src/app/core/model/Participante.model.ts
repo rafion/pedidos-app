@@ -14,6 +14,8 @@ export class Participante {
 
     constructor() {
         this.nome = '';
+        this.enderecos = [];
+        this.contatos = [];
     }
 
 }

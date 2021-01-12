@@ -49,8 +49,8 @@ export class ParticipanteReadComponent implements OnInit {
 
   }
   ngAfterViewInit() {
-    this.participanteResumoDTO.paginator = this.paginator;
-    this.participanteResumoDTO.sort = this.sort;
+    //this.participanteResumoDTO.paginator = this.paginator;
+    // this.participanteResumoDTO.sort = this.sort;
   }
   /*
     atualizaTabela(): void {

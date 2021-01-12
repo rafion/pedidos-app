@@ -95,13 +95,21 @@ export class ParticipanteCreateComponent implements OnInit {
 
     //pega o id da rota
     const id = +this.activetedRouter.snapshot.paramMap.get('id')
+    this.findById(id);
+  }
+
+  findById(id) {
     if (id) {
       this.participante.id = id;
-      this.participanteService.readById(id).subscribe(dados =>
-        this.updateForm(dados)
+      this.participanteService.readById(id).subscribe(dados => {
+        this.updateForm(dados),
+          console.log('dados do update form'),
+          console.log(dados)
+      }
         , errorResponse => {
           if (errorResponse.status == 404) {
             this.participanteService.showMessage('Cliente não encontrado!', true)
+            this.resetForm();
             console.log('Participante não encontrado!');
           }
           this.participante = new Participante();
@@ -207,7 +215,10 @@ export class ParticipanteCreateComponent implements OnInit {
         this.participanteService.update(this.participante).subscribe(response => {
           this.success = true;
           this.participanteService.showMessage('Participante Atualizado Com sucesso!!', false);
-          this.updateForm(response);
+          //this.updateForm(response);
+          //apaga o ultimo que sempre é o do formulario, que ja esta no array
+          this.contatos.pop();
+          this.enderecos.pop();
 
         }, errorResponse => {
           //this.participanteService.showMessage('Erro ao atualizar Participante', true);
@@ -271,11 +282,17 @@ export class ParticipanteCreateComponent implements OnInit {
     this.participante.dataNascimento = participante.dataNascimento;
     this.participante.cnpj = participante.cnpj;
     this.participante.inscricaoEstadual = participante.inscricaoEstadual;
+
     this.participante.enderecos = participante.enderecos;
     this.participante.contatos = participante.contatos;
+    //atualiza tabela de contatos e enderecos
+    this.contatos = Array.from(participante.contatos.filter(e => e.favorito == false));
+    this.enderecos = Array.from(participante.enderecos.filter(e => e.favorito == false));
     //console.log('participante para update')
     //console.log(this.participante)
 
+    let enderecoFavorito: Endereco[] = participante.enderecos.filter(e => e.favorito == true);
+    let contatoFavorito: Contato[] = participante.contatos.filter(e => e.favorito == true);
 
     this.participanteForm.patchValue({
       participante: {
@@ -288,27 +305,31 @@ export class ParticipanteCreateComponent implements OnInit {
         inscricaoEstadual: participante.inscricaoEstadual,
       },
       endereco: {
-        id: participante.enderecos[0].id,
-        cep: participante.enderecos[0].cep,
-        tipo: participante.enderecos[0].tipo,
-        logradouro: participante.enderecos[0].logradouro,
-        bairro: participante.enderecos[0].bairro,
-        numero: participante.enderecos[0].numero,
-        complemento: participante.enderecos[0].complemento,
-        municipio: participante.enderecos[0].municipio,
-        codigo_ibge: participante.enderecos[0].codigo_ibge,
-        uf: participante.enderecos[0].uf,
-        favorito: participante.enderecos[0].favorito,
-        participante: participante.enderecos[0].participante
+
+        id: enderecoFavorito[0].id,
+        cep: enderecoFavorito[0].cep,
+        tipo: enderecoFavorito[0].tipo,
+        logradouro: enderecoFavorito[0].logradouro,
+        bairro: enderecoFavorito[0].bairro,
+        numero: enderecoFavorito[0].numero,
+        complemento: enderecoFavorito[0].complemento,
+        municipio: enderecoFavorito[0].municipio,
+        codigo_ibge: enderecoFavorito[0].codigo_ibge,
+        uf: enderecoFavorito[0].uf,
+        favorito: enderecoFavorito[0].favorito,
+        participante: enderecoFavorito[0].participante
+
       },
       contato: {
-        id: participante.contatos[0].id,
-        tipo: participante.contatos[0].tipo,
-        nome: participante.contatos[0].nome,
-        telefone: participante.contatos[0].telefone,
-        email: participante.contatos[0].email,
-        favorito: participante.contatos[0].favorito,
-        participante: participante.enderecos[0].participante
+
+        id: contatoFavorito[0].id,
+        tipo: contatoFavorito[0].tipo,
+        nome: contatoFavorito[0].nome,
+        telefone: contatoFavorito[0].telefone,
+        email: contatoFavorito[0].email,
+        favorito: contatoFavorito[0].favorito,
+        participante: contatoFavorito[0].participante
+
       }
 
 
@@ -349,6 +370,7 @@ export class ParticipanteCreateComponent implements OnInit {
     this.participante = new Participante();
     this.enderecos = [];
     this.contatos = [];
+    this.router.navigate(['/participantes/new'])
 
   }
 
@@ -507,7 +529,8 @@ export class ParticipanteCreateComponent implements OnInit {
         bairro: this.endereco.bairro,
         logradouro: this.endereco.logradouro,
         numero: this.endereco.numero,
-        complemento: this.endereco.complemento
+        complemento: this.endereco.complemento,
+        // participante: this.participante.id
       }
 
     });
@@ -515,8 +538,14 @@ export class ParticipanteCreateComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
 
       if (result) {
+
         this.endereco = result;
+        if (this.participante.id) {
+          this.endereco.participante = this.participante.id;
+        }
         this.enderecos.push(this.endereco);
+        console.log('endereco adcionado');
+        console.log(this.endereco);
         //this.participanteForm.get('endereco').reset();
         //refresh na tabela
         this.enderecos = Array.from(this.enderecos);
@@ -536,7 +565,8 @@ export class ParticipanteCreateComponent implements OnInit {
         tipo: this.contato.tipo,
         nome: this.contato.nome,
         telefone: this.contato.telefone,
-        email: this.contato.email
+        email: this.contato.email,
+        // participante: this.participante.id
 
       }
 
@@ -546,7 +576,12 @@ export class ParticipanteCreateComponent implements OnInit {
 
       if (result) {
         this.contato = result;
+        if (this.participante.id) {
+          this.contato.participante = this.participante.id;
+        }
         this.contatos.push(this.contato);
+        console.log('endereco adcionado');
+        console.log(this.contato);
         //this.participanteForm.get('endereco').reset();
         //refresh na tabela
         this.contatos = Array.from(this.contatos);

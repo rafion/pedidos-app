@@ -60,7 +60,8 @@
                                         <ng-container formGroupName="participante">
                                             <mat-form-field class="full-width">
                                                 <mat-label>ID</mat-label>
-                                                <input matInput type="number" disabled name="id" formControlName='id'>
+                                                <input matInput type="number" disabled name="id" formControlName='id'
+                                                    (blur)="findById($event.target.value)">
                                             </mat-form-field>
                                         </ng-container>
                                     </td>
@@ -364,7 +365,7 @@
                                 </ng-container>
                                 <ng-container matColumnDef="cidade">
                                     <th mat-header-cell *matHeaderCellDef>Cidade</th>
-                                    <td mat-cell *matCellDef="let row">{{row.cidade}}</td>
+                                    <td mat-cell *matCellDef="let row">{{row.municipio}}</td>
                                 </ng-container>
                                 <ng-container matColumnDef="uf">
                                     <th mat-header-cell *matHeaderCellDef>Estado</th>
