@@ -20,10 +20,6 @@ export class ParticipanteService {
     private snackBar: MatSnackBar,
     private http: HttpClient) { }
 
-
-
-
-
   //salva e retorna um Observable de produtos
   //pipe com um map para tratar o erro na criação do produto, se ocorrer
   create(participante: Participante): Observable<Participante> {

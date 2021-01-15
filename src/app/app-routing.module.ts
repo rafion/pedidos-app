@@ -25,7 +25,11 @@ const routes: Routes = [
         path: 'categories', loadChildren: () => import('./core/view/categories/categories.module').then(m => m.CategoriesModule)
 
         //'./core/view/categories/categories.module#CategoriesModule'
-      }
+      },
+      {
+        path: 'produtos', //component: ParticipanteCreateComponent
+        loadChildren: () => import('./core/components/produto/produto.module').then(m => m.ProdutoModule)
+      },
     ],
 
 

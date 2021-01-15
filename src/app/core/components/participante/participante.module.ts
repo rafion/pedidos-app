@@ -1,10 +1,9 @@
 import { ParticipanteRoutingModule } from './participante-routing.module';
 
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
-import { MatInputModule } from '@angular/material/input';
+
 import { ParticipanteDeleteDialogComponent } from './participante-delete-dialog/participante-delete-dialog.component';
 import { ParticipanteCreateComponent } from './participante-create/participante-create.component';
 import { NgModule } from '@angular/core';
@@ -12,8 +11,7 @@ import { CommonModule } from '@angular/common';
 import { ParticipanteUpdateComponent } from './participante-update/participante-update.component';
 import { ParticipanteReadComponent } from './participante-read/participante-read.component';
 
-
-
+import { MatInputModule } from '@angular/material/input';
 import { MatCardModule } from '@angular/material/card';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatCheckboxModule } from '@angular/material/checkbox';
@@ -49,21 +47,21 @@ import { ParticipanteContatoDialogComponent } from './participante-contato-dialo
     CommonModule,
     ParticipanteRoutingModule,
     FormsModule,
+    ReactiveFormsModule,
+    NgxMaskModule,
+    NgBrazil,
+    TextMaskModule,
     MatCardModule,
     MatFormFieldModule,
     MatCheckboxModule,
     MatInputModule,
     MatButtonModule,
     MatTabsModule,
-    TextMaskModule,
     MatRadioModule,
     MatDividerModule,
     MatSelectModule,
     MatIconModule,
     MatNativeDateModule,
-    ReactiveFormsModule,
-    NgxMaskModule,
-    NgBrazil,
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,

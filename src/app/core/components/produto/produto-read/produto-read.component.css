@@ -1,0 +1,10 @@
+.title {
+    font-size: 2rem; /*unidade relativa */
+    font-weight: 300;
+    line-height: 1.2;
+  }
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }
+  

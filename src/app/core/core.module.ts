@@ -1,3 +1,4 @@
+import { ProdutoModule } from './components/produto/produto.module';
 import { SharedModule } from './../shared/shared.module';
 
 import { ReactiveFormsModule } from '@angular/forms'
@@ -15,14 +16,14 @@ import { HomeComponent } from './view/home/home.component'
 import { ParticipanteCrudComponent } from './view/participante-crud/participante-crud.component';
 import { ParticipanteCreateComponent } from './components/participante/participante-create/participante-create.component';
 
-import { NgxMaskModule } from 'ngx-mask'
+import { NgxMaskModule } from 'ngx-mask';
+
 
 
 
 @NgModule({
   declarations: [
-
-    HomeComponent
+    HomeComponent,
   ],
   imports: [
     ParticipanteModule,
@@ -32,6 +33,7 @@ import { NgxMaskModule } from 'ngx-mask'
     FormsModule,
     NgxMaskModule.forRoot(),
     SharedModule,
+    ProdutoModule
 
 
 
@@ -39,6 +41,7 @@ import { NgxMaskModule } from 'ngx-mask'
   ],
   exports: [
     ParticipanteModule,
+    ProdutoModule,
     HttpClientModule,
     LayoutModule,
     ReactiveFormsModule,

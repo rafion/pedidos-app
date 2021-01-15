@@ -1,3 +1,5 @@
+import { EnderecoService } from './../../../service/endereco.service';
+import { ContatoService } from './../../../service/contato.service';
 import { HeaderService } from './../../../service/header.service';
 
 import { empty, Observable } from 'rxjs';
@@ -63,7 +65,9 @@ export class ParticipanteCreateComponent implements OnInit {
     private participanteService: ParticipanteService,
     private dialog: MatDialog,
     private dadosService: DadosService,
-    private headerService: HeaderService
+    private headerService: HeaderService,
+    private contatoService: ContatoService,
+    private enderecoService: EnderecoService
   ) {
     headerService.headerData = {
       title: this.activetedRouter.snapshot.paramMap.get('id') ? 'Clientes/Editar' : 'Clientes/Novo Cliente',
@@ -214,11 +218,13 @@ export class ParticipanteCreateComponent implements OnInit {
         console.log(this.participante);
         this.participanteService.update(this.participante).subscribe(response => {
           this.success = true;
+          this.participante = response;
+          this.updateForm(response);
           this.participanteService.showMessage('Participante Atualizado Com sucesso!!', false);
-          //this.updateForm(response);
+
           //apaga o ultimo que sempre é o do formulario, que ja esta no array
-          this.contatos.pop();
-          this.enderecos.pop();
+          //this.contatos.pop();
+          //this.enderecos.pop();
 
         }, errorResponse => {
           //this.participanteService.showMessage('Erro ao atualizar Participante', true);
@@ -237,6 +243,7 @@ export class ParticipanteCreateComponent implements OnInit {
         console.log(this.participante);
         this.participanteService.create(this.participante).subscribe(response => {
           this.success = true;
+          this.participante = response;
           this.participanteService.showMessage('Participante Salvo Com sucesso!!', false);
           this.updateForm(response);
           // console.log('response ao salvar:');
@@ -271,6 +278,8 @@ export class ParticipanteCreateComponent implements OnInit {
   }
 
   updateForm(participante: Participante) {
+
+    //this.resetForm();
     console.log('dados retornados por id');
     console.log(participante);
     // this.participante = participante;
@@ -475,9 +484,26 @@ export class ParticipanteCreateComponent implements OnInit {
 
   deleteContato(contato: Contato) {
     console.log("conato Delete!")
-    let posicao = this.contatos.indexOf(contato);
-    this.contatos.splice(posicao, 1);
-    this.contatos = Array.from(this.contatos);
+    if (contato.id) {
+      let r = confirm("Confirma a Exclusão do Contato!?\nSim ou Cancel.");
+      if (r == true) {
+        this.contatoService.deleteById(contato.id).subscribe(() => {
+          let posicao = this.contatos.indexOf(contato);
+          this.contatos.splice(posicao, 1);
+          this.contatos = Array.from(this.contatos);
+          this.contatoService.showMessage("Contato Excluido com sucesso");
+        }, errorResponse => {
+          this.contatoService.showMessage(errorResponse.error.message, true)
+        }
+        )
+      }
+    } else {
+      let posicao = this.contatos.indexOf(contato);
+      this.contatos.splice(posicao, 1);
+      this.contatos = Array.from(this.contatos);
+    }
+
+
   }
 
   newEndereco(endereco: Endereco) {
@@ -504,15 +530,26 @@ export class ParticipanteCreateComponent implements OnInit {
   }
 
   deleteEndereco(endereco: Endereco) {
-    console.log('Endereco deletado')
-    //this.enderecos.splice(index, 1); //remover
+    console.log("Endereco Delete!")
+    if (endereco.id) {
+      let r = confirm("Confirma a Exclusão do Endereço!?\nSim ou Cancel.");
+      if (r == true) {
+        this.enderecoService.deleteById(endereco.id).subscribe(() => {
+          let posicao = this.enderecos.indexOf(endereco);
+          this.enderecos.splice(posicao, 1);
+          this.enderecos = Array.from(this.enderecos);
+          this.enderecoService.showMessage("Contato Excluido com sucesso");
+        }, errorResponse => {
+          this.enderecoService.showMessage(errorResponse.error.message, true)
+        }
 
-    //pega a possição no array
-    let posicao = this.enderecos.indexOf(endereco);
-    this.enderecos.splice(posicao, 1);
-
-    //refresh na tabela
-    this.enderecos = Array.from(this.enderecos);
+        )
+      }
+    } else {
+      let posicao = this.enderecos.indexOf(endereco);
+      this.enderecos.splice(posicao, 1);
+      this.enderecos = Array.from(this.enderecos);
+    }
   }
 
   adcionarEnderecoLista(): void {
