@@ -53,118 +53,125 @@
                 <mat-tab-group mat-align-tabs="start" dynamicHeight>
                     <mat-tab label="Cadastro">
                         <mat-card class="half-width">
+                            <ng-container formGroupName="participante">
+                                <table class="full-width">
 
+                                    <tr>
+                                        <td *ngIf="participante.id">
 
-
-                            <table class="full-width">
-                                <tr>
-                                    <td *ngIf="participante.id">
-                                        <ng-container formGroupName="participante">
                                             <mat-form-field class="full-width">
                                                 <mat-label>ID</mat-label>
                                                 <input matInput type="number" name="id" formControlName='id'
                                                     (blur)="findById($event.target.value)">
                                             </mat-form-field>
-                                        </ng-container>
-                                    </td>
-                                    <td>
-                                        <ng-container formGroupName="participante">
+
+                                        </td>
+                                        <td>
+
                                             <mat-form-field class="full-width">
                                                 <mat-label>Nome</mat-label>
                                                 <input matInput placeholder="Nome" #name name="nome"
                                                     formControlName='nome' required [value]="name.value.toUpperCase()">
+                                                <mat-error
+                                                    *ngIf="participanteForm.controls.participante.get('nome').errors?.required">
+                                                    Nome é Obrigatorio
+                                                </mat-error>
+
                                             </mat-form-field>
-                                        </ng-container>
-                                    </td>
-                                    <td *ngIf="radioPessoa=='J' ? true : false">
-                                        <ng-container formGroupName="participante">
+
+                                        </td>
+                                        <td *ngIf="radioPessoa=='J' ? true : false">
+
                                             <mat-form-field class="full-width">
                                                 <mat-label>Nome fantasia</mat-label>
                                                 <input matInput placeholder="Nome Fantasia" name="nomeFantasia"
                                                     #nomeFantasia formControlName="nomeFantasia"
                                                     [value]="nomeFantasia.value.toUpperCase()">
                                             </mat-form-field>
-                                        </ng-container>
-                                    </td>
 
-                                </tr>
+                                        </td>
 
-                            </table>
+                                    </tr>
 
-                            <table class="full-width" cellspacing="0">
-                                <tr>
-                                    <td *ngIf="radioPessoa=='F' ? true : false">
-                                        <ng-container formGroupName="participante">
+                                </table>
+
+                                <table class="full-width" cellspacing="0">
+                                    <tr>
+                                        <td *ngIf="radioPessoa=='F' ? true : false">
+
                                             <mat-form-field class="full-width">
                                                 <mat-label>CPF</mat-label>
                                                 <input matInput mask="000.000.000-00" placeholder="CPF" name="cpf"
                                                     formControlName="cpf">
                                             </mat-form-field>
-                                        </ng-container>
-                                    </td>
-                                    <td *ngIf="radioPessoa=='F' ? true : false">
-                                        <ng-container formGroupName="participante">
+
+                                        </td>
+                                        <td *ngIf="radioPessoa=='F' ? true : false">
+
                                             <mat-form-field class="full-width">
                                                 <mat-label>Data Nascimento</mat-label>
                                                 <input matInput type="date" placeholder="Data Nascimento"
                                                     name="dataNascimento" formControlName="dataNascimento">
                                             </mat-form-field>
-                                        </ng-container>
-                                    </td>
-                                    <td *ngIf="radioPessoa=='J' ? true : false">
-                                        <ng-container formGroupName="participante">
+
+                                        </td>
+                                        <td *ngIf="radioPessoa=='J' ? true : false">
+
                                             <mat-form-field class="full-width">
                                                 <mat-label>CNPJ</mat-label>
                                                 <input matInput placeholder="CNPJ" mask="00.000.000/0000-00" name="cnpj"
                                                     formControlName="cnpj">
                                             </mat-form-field>
-                                        </ng-container>
-                                    </td>
-                                    <td *ngIf="radioPessoa=='J' ? true : false">
-                                        <ng-container formGroupName="participante">
+
+                                        </td>
+                                        <td *ngIf="radioPessoa=='J' ? true : false">
+
                                             <mat-form-field class="full-width">
                                                 <mat-label>Inscrição Estadual</mat-label>
                                                 <input matInput placeholder="Inscrição Estadual"
                                                     name="inscricaoEstadual" formControlName="inscricaoEstadual">
                                             </mat-form-field>
-                                        </ng-container>
-                                    </td>
-                                </tr>
-                            </table>
 
+                                        </td>
+                                    </tr>
+                                </table>
+                            </ng-container>
                             <mat-divider></mat-divider>
-                            <table class="full-width" cellspacing="0">
-                                <tr>
-                                    <td>
-                                        <mat-form-field class="full-width">
-                                            <mat-label>Tipo</mat-label>
-                                            <ng-container formGroupName="endereco">
-                                                <mat-select type="string" formControlName="tipo">
+                            <ng-container formGroupName="endereco">
+                                <table class="full-width" cellspacing="0">
+
+                                    <tr>
+                                        <td>
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Tipo</mat-label>
+
+                                                <mat-select matNativeControl type="string" formControlName="tipo">
                                                     <mat-option value='RESIDENCIAL'>Residencial</mat-option>
                                                     <mat-option value='COMERCIAL'>Comercial</mat-option>
                                                 </mat-select>
-                                            </ng-container>
 
-                                        </mat-form-field>
-                                    </td>
 
-                                    <td>
-                                        <mat-form-field class="full-width">
-                                            <mat-label for="cep">CEP</mat-label>
-                                            <ng-container formGroupName="endereco">
-                                                <input matInput type="text" mask="00000-000" maxlength="16" size="16"
-                                                    #cep id="cep" name="cep" (blur)="consultaCEP($event.target.value)"
+                                            </mat-form-field>
+                                        </td>
+
+                                        <td>
+                                            <mat-form-field class="full-width">
+                                                <mat-label for="cep">CEP</mat-label>
+
+                                                <input matInput type="text" mask="00000-000" maxlength="9" size="9" #cep
+                                                    id="cep" name="cep" (blur)="consultaCEP($event.target.value)"
                                                     placeholder="Ex. 49000-000" formControlName="cep">
-                                            </ng-container>
-                                            <!--  <mat-hint align="end">{{cep.value.length}} / 8</mat-hint>-->
-                                        </mat-form-field>
-                                    </td>
+
+                                                <mat-hint align="end">{{cep.value.length}} / 9</mat-hint>
+
+                                            </mat-form-field>
+                                        </td>
 
 
-                                    <td>
-                                        <mat-form-field class="full-width">
-                                            <mat-label>Estado</mat-label>
-                                            <ng-container formGroupName="endereco">
+                                        <td>
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Estado</mat-label>
+
 
                                                 <mat-select type="string" id="estado" formControlName="uf">
                                                     <mat-option *ngFor="let estado of estados " [value]="estado.uf">
@@ -172,13 +179,13 @@
                                                     </mat-option>
 
                                                 </mat-select>
-                                            </ng-container>
-                                        </mat-form-field>
-                                    </td>
-                                    <td>
-                                        <mat-form-field class="full-width">
-                                            <mat-label>Cidade</mat-label>
-                                            <ng-container formGroupName="endereco">
+
+                                            </mat-form-field>
+                                        </td>
+                                        <td>
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Cidade</mat-label>
+
                                                 <mat-select type="string" id="municipio" formControlName="municipio">
                                                     <mat-option *ngFor="let municipio of municipios "
                                                         [value]="municipio.nome"
@@ -187,69 +194,70 @@
                                                     </mat-option>
 
                                                 </mat-select>
-                                            </ng-container>
-                                        </mat-form-field>
-                                    </td>
-                                    <td *ngIf=false>
-                                        <mat-form-field class="full-width">
-                                            <mat-label>Cod. Ibge</mat-label>
-                                            <ng-container formGroupName="endereco">
+
+                                            </mat-form-field>
+                                        </td>
+                                        <td *ngIf=false>
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Cod. Ibge</mat-label>
+
                                                 <input matInput placeholder="Ex. 2800308" #codigo_ibge id="codigo_ibge"
                                                     #codigo_ibge name="codigo_ibge" formControlName="codigo_ibge">
-                                            </ng-container>
-                                        </mat-form-field>
-                                    </td>
+
+                                            </mat-form-field>
+                                        </td>
 
 
 
 
 
-                                </tr>
-                            </table>
+                                    </tr>
+                                </table>
 
-                            <table class="full-width" cellspacing="0">
-                                <tr>
-                                    <td>
-                                        <mat-form-field class="full-width">
-                                            <mat-label>Bairro</mat-label>
-                                            <ng-container formGroupName="endereco">
+                                <table class="full-width" cellspacing="0">
+                                    <tr>
+                                        <td>
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Bairro</mat-label>
+
                                                 <input matInput placeholder="Ex. Av. sao joao" #bairro id="bairro"
                                                     required type="text" name="bairro" formControlName="bairro">
-                                            </ng-container>
-                                        </mat-form-field>
-                                    </td>
-                                    <td>
-                                        <mat-form-field class="full-width">
-                                            <mat-label>Logradouro</mat-label>
-                                            <ng-container formGroupName="endereco">
+
+                                            </mat-form-field>
+                                        </td>
+                                        <td>
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Logradouro</mat-label>
+
                                                 <input matInput placeholder="Ex. Av. sao joao" #logradouro required
                                                     id="logradouro" type="text" name="logradouro"
                                                     formControlName="logradouro">
-                                            </ng-container>
-                                        </mat-form-field>
-                                    </td>
 
-                                    <td>
-                                        <mat-form-field class="full-width">
-                                            <mat-label>Numero</mat-label>
-                                            <ng-container formGroupName="endereco">
+                                            </mat-form-field>
+                                        </td>
+
+                                        <td>
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Numero</mat-label>
+
                                                 <input matInput maxlength="6" size="6" type="text" #numero id="numero"
                                                     required name="numero" formControlName="numero">
-                                            </ng-container>
-                                        </mat-form-field>
-                                    </td>
-                                    <td>
-                                        <mat-form-field class="full-width">
-                                            <mat-label>Complemento</mat-label>
-                                            <ng-container formGroupName="endereco">
+
+                                            </mat-form-field>
+                                        </td>
+                                        <td>
+                                            <mat-form-field class="full-width">
+                                                <mat-label>Complemento</mat-label>
+
                                                 <input matInput maxlength="20" #complemento id="complemento"
                                                     name="complemento" formControlName="complemento">
-                                            </ng-container>
-                                        </mat-form-field>
-                                    </td>
-                                </tr>
 
-                            </table>
+                                            </mat-form-field>
+                                        </td>
+                                    </tr>
+
+                                </table>
+                            </ng-container>
                             <mat-divider></mat-divider>
                             <table class="full-width">
                                 <tr>
@@ -257,7 +265,7 @@
                                         <mat-form-field class="full-width">
                                             <mat-label>Tipo Contato</mat-label>
                                             <ng-container formGroupName="contato">
-                                                <mat-select type="string" formControlName="tipo">
+                                                <mat-select matNativeControl type="string" formControlName="tipo">
                                                     <mat-option value='PESSOAL'>Pessoal</mat-option>
                                                     <mat-option value='COMERCIAL'>Comercial</mat-option>
                                                 </mat-select>
@@ -506,17 +514,20 @@
                 </mat-tab-group>
 
                 <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
-                    {{!participante.id ? 'Salvar' : 'Atualizar'}}
+                    <mat-icon class="sidenav-icon">
+                        {{!participante.id ? 'save' : 'update'}}
+
+                    </mat-icon> {{!participante.id ? 'Salvar' : 'Atualizar'}}
                 </button>
 
 
 
-                <button mat-raised-button color="accent" (click)="resetForm()">
-                    Novo
+                <button mat-raised-button color="basic" (click)="resetForm()">
+                    <mat-icon class="sidenav-icon">autorenew</mat-icon> Novo
                 </button>
 
                 <button mat-raised-button color="warn" (click)="cancel()">
-                    Cancelar
+                    <mat-icon class="sidenav-icon">arrow_back</mat-icon> Cancelar
                 </button>
             </form>
         </div>

@@ -1,43 +1,185 @@
-<mat-card class="mat-card-form">
-    <mat-card-content class="mat-content">
-        <form>
-            <span>
-                <mat-form-field class="min-width">
-                    <mat-label>ID</mat-label>
-                    <input matInput type="number" name="id">
-                </mat-form-field>
+<form [formGroup]="produtoForm">
+    <mat-tab-group mat-align-tabs="start" dynamicHeight>
+        <mat-tab label="Cadastro">
 
-                <mat-form-field class="cod-width">
-                    <mat-label>EAN</mat-label>
-                    <input matInput placeholder="Codigo de barras" type="text" name="ean">
-                </mat-form-field>
 
-                <mat-form-field class="cod-width">
-                    <mat-label>Referência</mat-label>
-                    <input matInput type="text" name="referencia">
-                </mat-form-field>
+            <mat-card class="mat-card-form">
+                <mat-card-content class="container">
 
-                <mat-form-field class="half-width">
-                    <mat-label>Descricão</mat-label>
-                    <input matInput type="text" name="descricao">
-                </mat-form-field>
-            </span>
-            <div>
-                <mat-form-field class="number-width">
-                    <mat-label>Preço Venda</mat-label>
-                    <input matInput type="number" name="preco_venda">
-                </mat-form-field>
+                    <div class="row">
+                        <!-- produto Form Group -->
+                        <ng-container formGroupName="produto">
+                            <mat-form-field class="half-width-4">
+                                <mat-label>ID</mat-label>
+                                <input matInput type="number" maxlength="6" name="id" formControlName="id"
+                                    (blur)="findById($event.target.value)">
+                            </mat-form-field>
+                        </ng-container>
 
-                <mat-form-field class="number-width">
-                    <mat-label>Preço Compra</mat-label>
-                    <input matInput type="number" name="preco_compra">
-                </mat-form-field>
+                        <ng-container formGroupName="codBarra">
+                            <mat-form-field class="half-width-3">
+                                <mat-label>Cod. Barra</mat-label>
+                                <input matInput placeholder="Codigo de barras" type="text" name="codBarra" minlength="7"
+                                    maxlength="13" formControlName="codBarra"
+                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                                <mat-error *ngIf="produtoForm.controls.codBarra.get('codBarra').hasError('minlength')">
+                                    O Cod. Barras deve ter no minimo 7 digitos
+                                </mat-error>
+                            </mat-form-field>
+                        </ng-container>
 
-                <mat-form-field class="cod-width">
-                    <mat-label>NCM</mat-label>
-                    <input matInput type="text" name="ncm">
-                </mat-form-field>
-            </div>
-        </form>
-    </mat-card-content>
-</mat-card>
+                        <ng-container formGroupName="produto">
+                            <mat-form-field class="half-width-3">
+                                <mat-label>Referência</mat-label>
+                                <input matInput type="text" name="referencia" formControlName="referencia">
+                            </mat-form-field>
+                        </ng-container>
+
+                        <ng-container formGroupName="produto">
+                            <mat-form-field class="full-width">
+                                <mat-label>Descricão</mat-label>
+                                <input matInput type="text" name="descricao" formControlName="descricao" minlength="3"
+                                    maxlength="80">
+                            </mat-form-field>
+                        </ng-container>
+
+                        <ng-container formGroupName="produto">
+                            <mat-form-field class="half-width-4">
+                                <mat-label>P. Venda</mat-label>
+                                <input matInput placeholder="Preço Venda" type="number" name="precoVenda"
+                                    formControlName="precoVenda">
+                            </mat-form-field>
+                        </ng-container>
+
+                        <ng-container formGroupName="produto">
+                            <mat-form-field class="half-width-4">
+                                <mat-label>P. Compra</mat-label>
+                                <input matInput placeholder="Preço Compra" type="number" name="precoCompra"
+                                    formControlName="precoCompra">
+                            </mat-form-field>
+                        </ng-container>
+
+                        <ng-container formGroupName="produto">
+                            <mat-form-field class="half-width-4">
+                                <mat-label>NCM</mat-label>
+                                <input matInput type="text" name="ncm" #ncm formControlName="ncm" minlength="8"
+                                    maxlength="8" size="8"
+                                    onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+
+                                <mat-hint align="end">{{ncm.value?.length || 0}}/8</mat-hint>
+                                <mat-error *ngIf="produtoForm.controls.produto.get('ncm').errors?.required">
+                                    NCM Obrigatorio
+                                </mat-error>
+                                <mat-error *ngIf="produtoForm.controls.produto.get('ncm').hasError('minlength')">
+                                    NCM tem que ter 8 digitos
+                                </mat-error>
+
+
+                                <!--
+                                    <mat-error *ngIf="produtoForm.controls['ncm'].errors?.required('NCM requerido')">
+                                    Comment is required.
+                                </mat-error>
+
+
+                                      <mat-error *ngIf="produtoForm.controls.produto.get('ncm').hasError('NCM requerido')">
+                                    Comment is required.
+                                </mat-error>
+                                -->
+
+
+
+                            </mat-form-field>
+                        </ng-container>
+                        <ng-container formGroupName="produto">
+                            <mat-form-field class="half-width-3">
+                                <mat-label>Grupo</mat-label>
+                                <mat-select matNativeControl type="string" id="grupo" formControlName="grupo">
+
+                                    <mat-option *ngFor="let grupo of grupos | async" [value]="grupo.id">
+                                        <!-- <mat-option *ngFor="let grupo of grupos" [value]="grupo.id">-->
+                                        {{grupo.nome}}
+                                    </mat-option>
+
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+                        <ng-container formGroupName="produto">
+                            <mat-form-field class="half-width-2">
+                                <mat-label>Sub. Grupo</mat-label>
+                                <mat-select matNativeControl type="string" id="subGrupo" formControlName="subGrupo">
+
+                                    <mat-option *ngFor="let subGrupo of subGrupos" [value]="subGrupo">
+                                        {{subGrupo.nome}}
+                                    </mat-option>
+
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+
+
+
+
+
+
+
+                        <ng-container formGroupName="codBarra">
+                            <mat-form-field class="min-width">
+                                <mat-label>Unidade.</mat-label>
+                                <mat-select matNativeControl type="string" formControlName="unidade">
+                                    <mat-option value='UND'>UND</mat-option>
+                                    <mat-option value='Kg'>Kg</mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </ng-container>
+
+                        <ng-container formGroupName="codBarra">
+                            <mat-form-field class="min-width">
+                                <mat-label>Fator de Venda</mat-label>
+                                <input matInput placeholder="Fator Venda" type="number" name="fator"
+                                    formControlName="fator">
+                            </mat-form-field>
+
+                        </ng-container>
+
+
+                    </div>
+
+
+
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+        <mat-tab label="Param. Saida">
+            <mat-card>
+                <mat-card-content>
+                    Tipos de saida
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+
+        <mat-tab label="Param. Fiscais">
+            <mat-card>
+                <mat-card-content>
+                    Param. Fiscais
+                </mat-card-content>
+            </mat-card>
+        </mat-tab>
+    </mat-tab-group>
+
+    <button mat-raised-button color="primary" type="submit" (click)="onSubmit()">
+        <mat-icon class="sidenav-icon">
+            {{!produto.id ? 'save' : 'update'}}
+
+        </mat-icon> {{!produto.id ? 'Salvar' : 'Atualizar'}}
+    </button>
+
+
+
+    <button mat-raised-button color="basic" (click)="resetForm()">
+        <mat-icon class="sidenav-icon">autorenew</mat-icon>Novo
+    </button>
+
+    <button mat-raised-button color="warn" (click)="cancel()">
+        <mat-icon class="sidenav-icon">arrow_back</mat-icon> Cancelar
+    </button>
+</form>

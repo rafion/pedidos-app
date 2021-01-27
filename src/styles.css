@@ -1,18 +1,69 @@
-/* You can add global styles to this file, and also import other style files */
+/* You can add global styles to this file, and also import other style files 
+https://www.concretepage.com/angular-material/angular-material-inputs
+*/
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 .msg-success {
-    background-color: #28a745;
+    background-color: #45a164;
     color: #fff;
 }
 
 .msg-error {
-    background-color: #e35e6b;
+    background-color:#d16767;
     color: #fff;
 }
 
 .capitalized {
 	text-transform: capitalize;
+}
+
+.primary-color{
+    color: #4638c2;
+     /*
+     color: rgb(70, 56, 194;
+     */
+}
+.secondary-color{
+    color: #4c4f54;
+     /*
+     color: rgb(76, 79, 84);
+     */
+}
+.success-color{
+    color: #45a164;
+     /*
+     color: rgb(69, 161, 100);
+     */
+}
+.danger-color{
+    color: #d16767;
+     /*
+     color: rgb(209, 103, 103);
+     */
+}
+.warning-color{
+    color:#e1a82d;
+     /*
+     color: rgb(225, 168, 45);
+     */
+}
+.info-color{
+    color:#4799eb;
+     /*
+     color: rgb(71, 153, 235);
+     */
+}
+.ligth-color{
+    color:#20202a;
+     /*
+     color: rgb(32, 32, 42;
+     */
+}
+.dark-color{
+    color:#181924;
+     /*
+     color: rgb(24, 25, 36);
+     */
 }

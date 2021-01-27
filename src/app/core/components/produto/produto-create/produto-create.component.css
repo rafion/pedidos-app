@@ -1,23 +1,81 @@
+
+ mat-form-field{
+  padding-right: 8px;
+}
+
+button {
+    
+  margin: 5px ;
+ 
+  margin-right: 20px;
+}
+
+/*
+.mat-focused .mat-form-field-label {
+  color: green !important;
+  font-size: 20px;
+} 
+
+.mat-form-field-underline {
+  background-color: blue !important;
+} 
+
+.mat-form-field-ripple {
+  background-color: brown !important;;
+} 
+
+
+*/
+
 .full-width {
-    width: 100%;
+    max-width: 100%;
+    min-width: 50%
   }
+
   .half-width{
-    width: 60%;
+    max-width: 50%;
+    min-width: 25%;
   }
+  .half-width-2{
+    max-width: 25%;
+    min-width: 20%;
+  }
+
+  .half-width-3{
+    max-width: 20%;
+    min-width: 10%;
+  }
+
+  .half-width-4{
+    max-width: 12%;
+    min-width: 12%; 
+  }
+
   .min-width{
-    width: 5%;
+    max-width: 8%;
+    min-width: 8%; 
   }
-  .cod-width{
-    width: 15%;
+  
+
+
+
+ 
+
+  /* Flex*/
+  .row {
+    flex-direction: row;
+    flex-wrap: nowrap;
   }
-  .number-width{
-    width: 15%;
+  .container {
+    max-width: 100%;
+   /* margin: 0 auto; */
+    display: flex;
+   /* border: 1px solid #ccc;*/
+   flex-wrap: nowrap;
   }
 
-  .mat-content{
-      display: flex;
+  .column {
+    flex-direction: column;
   }
 
-  mat-form-field{
-    padding-right: 8px;
-  }
+  

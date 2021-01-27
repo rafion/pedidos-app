@@ -22,6 +22,7 @@ import { MASKS, NgBrazilValidators } from 'ng-brazil';
 import { MatDialog } from '@angular/material/dialog';
 import { tap, map, switchMap } from 'rxjs/operators';
 import { connectableObservableDescriptor } from 'rxjs/internal/observable/ConnectableObservable';
+import Swal from 'sweetalert2';
 
 /*https://github.com/mariohmol/js-brasil
 https://github.com/mariohmol/ng-brazil
@@ -99,7 +100,8 @@ export class ParticipanteCreateComponent implements OnInit {
 
     //pega o id da rota
     const id = +this.activetedRouter.snapshot.paramMap.get('id')
-    this.findById(id);
+    if (id) { this.findById(id); }
+
   }
 
   findById(id) {
@@ -153,24 +155,24 @@ export class ParticipanteCreateComponent implements OnInit {
   //   this.contacts = this.participanteForm.get('contato') as FormArray;
   // this.contacts.push(this.createContatosFormGroup());
 
+
   // }
   initForm() {
     this.participanteForm = this.formBuilder.group({
-      //https://github.com/mariohmol/ng-brazil
+      //https://github.com/mariohmol/ng-brazil 
       participante: this.formBuilder.group({
         id: [null],
-        nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(35)]],
+        nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(55)]],
         nomeFantasia: [null],
         cpf: [null, [<any>NgBrazilValidators.cpf]],
         dataNascimento: [null],
         cnpj: [null, [<any>NgBrazilValidators.cnpj]],
         inscricaoEstadual: [null],
       }),
-      // endereco: this.formBuilder.array([]),
-      //contacts: this.formBuilder.array([]),
+
       endereco: this.formBuilder.group({
         id: [null],
-        cep: [null],
+        cep: [null,],
         tipo: ['RESIDENCIAL'],
         logradouro: [null],
         bairro: [null],
@@ -529,6 +531,9 @@ export class ParticipanteCreateComponent implements OnInit {
     this.enderecos = Array.from(this.enderecos);
   }
 
+
+
+
   deleteEndereco(endereco: Endereco) {
     console.log("Endereco Delete!")
     if (endereco.id) {
@@ -635,5 +640,37 @@ export class ParticipanteCreateComponent implements OnInit {
     }
     return value.charAt(0).toUpperCase() + value.slice(1);
   }
+
+
+  /* https://sweetalert2.github.io/*/
+  alertInfo() {
+    Swal.fire('oi, to de boa com alerta facil')
+  }
+
+  alertDelete() {
+    Swal.fire({
+      title: 'Confirmar a Exclusão?',
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Foi sem querer'
+
+    }).then(result => {
+      if (result.value) {
+        Swal.fire('Excluido com sucesso', 'O registro ja era', 'success')
+      }
+    })
+  }
+
+  alertInput() {
+    Swal.fire({
+      title: 'informe um email',
+      input: 'email',
+      showCancelButton: true,
+      confirmButtonText: 'Enviar'
+    }).then(result => {
+      Swal.fire(`${result.value} Enviado com sucesso`)
+    })
+  }
+
 
 }

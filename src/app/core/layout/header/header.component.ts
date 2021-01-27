@@ -2,6 +2,7 @@ import { HeaderService } from './../../service/header.service';
 import { NavigationEnd, Router } from '@angular/router';
 
 import { Component, OnInit } from '@angular/core';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-header',
@@ -50,5 +51,39 @@ export class HeaderComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  /* https://sweetalert2.github.io/*/
+  alertInfo() {
+    Swal.fire('oi, to de boa com alerta facil')
+  }
+
+  alertDelete() {
+    Swal.fire({
+      title: 'Confirmar a Exclusão?',
+      showCancelButton: true,
+      confirmButtonText: 'Sim',
+      cancelButtonText: 'Foi sem querer',
+      confirmButtonColor: '#3f51b5',
+      cancelButtonColor: '#f44336',
+
+    }).then(result => {
+      if (result.value) {
+        Swal.fire('Excluido com sucesso', 'O registro ja era', 'success')
+      }
+    })
+  }
+
+  alertInput() {
+    Swal.fire({
+      title: 'informe um email',
+      input: 'email',
+      showCancelButton: true,
+      confirmButtonText: 'Enviar',
+      confirmButtonColor: '#3f51b5',
+      cancelButtonColor: '#f44336',
+    }).then(result => {
+
+      Swal.fire(`${result.value} Enviado com sucesso`)
+    })
+  }
 
 }

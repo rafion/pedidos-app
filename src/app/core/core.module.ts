@@ -18,6 +18,22 @@ import { ParticipanteCreateComponent } from './components/participante/participa
 
 import { NgxMaskModule } from 'ngx-mask';
 
+import { MatInputModule } from '@angular/material/input';
+import { MatCardModule } from '@angular/material/card';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatButtonModule } from '@angular/material/button';
+import { MatTabsModule } from '@angular/material/tabs';
+import { TextMaskModule } from 'angular2-text-mask';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatSelectModule } from '@angular/material/select';
+import { MatIconModule } from '@angular/material/icon';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MatTableModule } from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatSortModule } from '@angular/material/sort';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 
@@ -33,7 +49,22 @@ import { NgxMaskModule } from 'ngx-mask';
     FormsModule,
     NgxMaskModule.forRoot(),
     SharedModule,
-    ProdutoModule
+    ProdutoModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatButtonModule,
+    MatTabsModule,
+    MatRadioModule,
+    MatDividerModule,
+    MatSelectModule,
+    MatIconModule,
+    MatNativeDateModule,
+    MatTableModule,
+    MatPaginatorModule,
+    MatSortModule,
+    MatDialogModule
 
 
 

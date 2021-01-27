@@ -46,6 +46,8 @@ export class ParticipanteReadComponent implements OnInit {
   ngOnInit(): void {
     //this.atualizaTabela();
     this.atualizaTabelaPageable(this.page, this.size)
+    this.participanteResumoDTO.paginator = this.paginator;
+    this.participanteResumoDTO.sort = this.sort;
 
   }
   ngAfterViewInit() {
@@ -76,7 +78,7 @@ export class ParticipanteReadComponent implements OnInit {
         }
       }, errorResponse => {
         switch (errorResponse.status) {
-          case 400: console.log(errorResponse.error.messagem);
+          case 400: console.log(errorResponse.error.messagem);//bad request
             break;
 
           case 404: this.participanteService.showMessage('Nenhum Cliente encontrado!', true);

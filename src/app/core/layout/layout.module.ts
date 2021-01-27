@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 
+import { FlexLayoutModule } from '@angular/flex-layout';
+
 import { LayoutComponent } from './layout.component';
 import { NavComponent } from './nav/nav.component';
 import { FooterComponent } from './footer/footer.component';
@@ -19,6 +21,7 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatListModule } from '@angular/material/list';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { AppRoutingModule } from '../../app-routing.module';
 
 
@@ -43,7 +46,9 @@ import { AppRoutingModule } from '../../app-routing.module';
     MatMenuModule,
     MatListModule,
     MatSnackBarModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatExpansionModule,
+    FlexLayoutModule
 
   ],
   exports: [
@@ -58,7 +63,9 @@ import { AppRoutingModule } from '../../app-routing.module';
     MatMenuModule,
     MatListModule,
     MatSnackBarModule,
-    MatAutocompleteModule
+    MatAutocompleteModule,
+    MatExpansionModule,
+    FlexLayoutModule
   ]
 })
 export class LayoutModule { }

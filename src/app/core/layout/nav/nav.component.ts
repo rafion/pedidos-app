@@ -8,6 +8,11 @@ import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/l
   styleUrls: ['./nav.component.css']
 })
 export class NavComponent {
+  opened = true;
+  over = 'side';
+  expandHeight = '42px';
+  collapseHeight = '42px';
+  displayMode = 'flat';
 
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(
     Breakpoints.Handset
