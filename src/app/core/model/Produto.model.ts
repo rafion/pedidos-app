@@ -1,5 +1,8 @@
+import { Grupo } from './Grupo.model';
+import { Marca } from './Marca.model';
 import { SubGrupo } from './SubGrupo.model';
 import { CodBarra } from './CodBarra.model';
+import { UnidadeMedida } from './UnidadeMedida.model';
 export class Produto {
     id?: number;
     descricao: string;
@@ -11,7 +14,10 @@ export class Produto {
     ncm: string;
     cest: string;
     codBarras?: CodBarra[];
+    grupo: Grupo;
     subGrupo: SubGrupo;
+    marca: Marca;
+    unidadeMedida: UnidadeMedida;
 
     constructor() {
         this.id = null,
@@ -24,6 +30,8 @@ export class Produto {
             this.ncm = '',
             this.cest = '',
             this.codBarras = [],
-            this.subGrupo = null
+            this.grupo = null,
+            this.subGrupo = null,
+            this.marca = null
     }
 }

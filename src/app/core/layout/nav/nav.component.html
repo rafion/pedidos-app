@@ -24,9 +24,44 @@
                 <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/agenda']">
                     <mat-icon class="sidenav-icon">event_note</mat-icon> Agenda
                 </a>
-                <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/produtos']">
-                    <mat-icon class="sidenav-icon">shopping_cart</mat-icon> Produtos e Serviços
-                </a>
+
+
+                <mat-expansion-panel class="no-shadow">
+                    <mat-expansion-panel-header fxLayout="row" [expandedHeight]="expandHeight"
+                        [collapsedHeight]="collapseHeight">
+                        <mat-panel-title>
+                            <mat-icon class="sidenav-icon">shopping_cart</mat-icon> Produtos e Serviços
+                        </mat-panel-title>
+                    </mat-expansion-panel-header>
+                    <mat-nav-list class="ml-0" dense>
+                        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/produtos']">
+                            <mat-icon class="sidenav-icon">shopping_cart</mat-icon> Produtos
+                        </a>
+                    </mat-nav-list>
+                    <mat-nav-list class="ml-0" dense>
+                        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/financeiro']">
+                            <mat-icon class="sidenav-icon">view_compact</mat-icon> Departamentos
+                        </a>
+                    </mat-nav-list>
+                    <mat-nav-list class="ml-0" dense>
+                        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/financeiro']">
+                            <mat-icon class="sidenav-icon">picture_in_picture</mat-icon> Setores
+                        </a>
+                    </mat-nav-list>
+                    <mat-nav-list class="ml-0" dense>
+                        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/financeiro']">
+                            <mat-icon class="sidenav-icon">category</mat-icon> Grupos
+                        </a>
+                    </mat-nav-list>
+                    <mat-nav-list class="ml-0" dense>
+                        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/financeiro']">
+                            <mat-icon class="sidenav-icon">group_work</mat-icon> SubGrupos
+                        </a>
+                    </mat-nav-list>
+                </mat-expansion-panel>
+
+
+
                 <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/categories']">
                     <mat-icon class="sidenav-icon">category</mat-icon> Categorias
                 </a>
@@ -60,25 +95,7 @@
                             Departamentos
                         </a>
                     </mat-nav-list>
-                    <mat-nav-list class="ml-0" dense>
-                        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/financeiro']">
-                            Setores
-                        </a>
-                    </mat-nav-list>
-                    <mat-nav-list class="ml-0" dense>
-                        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/financeiro']">
-                            Grupos
-                        </a>
-                    </mat-nav-list>
-                    <mat-nav-list class="ml-0" dense>
-                        <a mat-list-item [routerLinkActive]="'active'" [routerLink]="['/financeiro']">
-                            SubGrupos
-                        </a>
-                    </mat-nav-list>
                 </mat-expansion-panel>
-
-
-
 
                 <mat-divider></mat-divider>
 
@@ -87,6 +104,9 @@
     </mat-sidenav>
     <main>
         <div class="main-container">
+            <div *ngIf="loaderService.isLoading | async" class="loader-container">
+                <mat-spinner style="top: 50%; left: 50%;"></mat-spinner>
+            </div>
             <router-outlet></router-outlet>
         </div>
     </main>

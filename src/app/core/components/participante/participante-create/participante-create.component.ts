@@ -487,18 +487,33 @@ export class ParticipanteCreateComponent implements OnInit {
   deleteContato(contato: Contato) {
     console.log("conato Delete!")
     if (contato.id) {
-      let r = confirm("Confirma a Exclusão do Contato!?\nSim ou Cancel.");
-      if (r == true) {
-        this.contatoService.deleteById(contato.id).subscribe(() => {
-          let posicao = this.contatos.indexOf(contato);
-          this.contatos.splice(posicao, 1);
-          this.contatos = Array.from(this.contatos);
-          this.contatoService.showMessage("Contato Excluido com sucesso");
-        }, errorResponse => {
-          this.contatoService.showMessage(errorResponse.error.message, true)
+      // let r = confirm("Confirma a Exclusão do Contato!?\nSim ou Cancel.");
+      Swal.fire({
+        title: 'Confirmar a Exclusão?',
+        showCancelButton: true,
+        confirmButtonText: 'Sim',
+        cancelButtonText: 'Foi sem querer',
+        confirmButtonColor: '#3f51b5',
+        cancelButtonColor: '#f44336',
+
+      }).then(result => {
+        if (result.value) {
+          this.contatoService.deleteById(contato.id).subscribe(() => {
+            let posicao = this.contatos.indexOf(contato);
+            this.contatos.splice(posicao, 1);
+            this.contatos = Array.from(this.contatos);
+            // this.contatoService.showMessage("Contato Excluido com sucesso");
+            Swal.fire('Contato excluido com sucesso', 'O registro ja era', 'success')
+          }, errorResponse => {
+            // this.contatoService.showMessage(errorResponse.error.message, true)
+            Swal.fire('Erro ao excluir registro', errorResponse.error.message, 'error')
+          }
+          )
         }
-        )
-      }
+      })
+
+
+
     } else {
       let posicao = this.contatos.indexOf(contato);
       this.contatos.splice(posicao, 1);
@@ -537,19 +552,30 @@ export class ParticipanteCreateComponent implements OnInit {
   deleteEndereco(endereco: Endereco) {
     console.log("Endereco Delete!")
     if (endereco.id) {
-      let r = confirm("Confirma a Exclusão do Endereço!?\nSim ou Cancel.");
-      if (r == true) {
-        this.enderecoService.deleteById(endereco.id).subscribe(() => {
-          let posicao = this.enderecos.indexOf(endereco);
-          this.enderecos.splice(posicao, 1);
-          this.enderecos = Array.from(this.enderecos);
-          this.enderecoService.showMessage("Contato Excluido com sucesso");
-        }, errorResponse => {
-          this.enderecoService.showMessage(errorResponse.error.message, true)
-        }
+      // let r = confirm("Confirma a Exclusão do Endereço!?\nSim ou Cancel.");
+      Swal.fire({
+        title: 'Confirmar a Exclusão?',
+        showCancelButton: true,
+        confirmButtonText: 'Sim',
+        cancelButtonText: 'Foi sem querer',
+        confirmButtonColor: '#3f51b5',
+        cancelButtonColor: '#f44336',
 
-        )
-      }
+      }).then(result => {
+        if (result.value) {
+          this.enderecoService.deleteById(endereco.id).subscribe(() => {
+            let posicao = this.enderecos.indexOf(endereco);
+            this.enderecos.splice(posicao, 1);
+            this.enderecos = Array.from(this.enderecos);
+            //this.enderecoService.showMessage("Contato Excluido com sucesso");
+            Swal.fire('Endereço excluido com sucesso', 'O registro ja era', 'success')
+          }, errorResponse => {
+            this.enderecoService.showMessage(errorResponse.error.message, true)
+          }
+
+          )
+        }
+      })
     } else {
       let posicao = this.enderecos.indexOf(endereco);
       this.enderecos.splice(posicao, 1);

@@ -15,7 +15,7 @@ export class SubGrupoService extends CrudService<SubGrupo> {
 
 
     constructor(protected http: HttpClient) {
-        super(http, `${environment.apiURLBase}/api/subgrupos`);
+        super(http, `${environment.apiURLBase}/api/sub-grupos`);
     }
 
     loadByID(id) {
@@ -25,7 +25,7 @@ export class SubGrupoService extends CrudService<SubGrupo> {
     readSubGrupos(grupoId): Observable<SubGrupo[]> {
         const params = new HttpParams()
             .set('grupo', grupoId)
-        return this.http.get<any>(`${environment.apiURLBase}/api/subgrupos?${params}`)
+        return this.http.get<any>(`${environment.apiURLBase}/api/sub-grupos?${params}`)
         /*.pipe(
           map((obj) => obj),
           catchError(e => this.errorHandler(e))

@@ -1,6 +1,6 @@
 import { Secao } from './Secao.model';
 export class Grupo {
-    id: number;
+    id?: number;
     nome: string;
     secao: Secao;
 }

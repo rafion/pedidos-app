@@ -39,7 +39,7 @@
                             <mat-form-field class="full-width">
                                 <mat-label>Descricão</mat-label>
                                 <input matInput type="text" name="descricao" formControlName="descricao" minlength="3"
-                                    maxlength="80">
+                                    maxlength="80" #descricao [value]="descricao.value.toUpperCase()">
                             </mat-form-field>
                         </ng-container>
 
@@ -93,41 +93,33 @@
                         <ng-container formGroupName="produto">
                             <mat-form-field class="half-width-3">
                                 <mat-label>Grupo</mat-label>
-                                <mat-select matNativeControl type="string" id="grupo" formControlName="grupo">
-
-                                    <mat-option *ngFor="let grupo of grupos | async" [value]="grupo.id">
-                                        <!-- <mat-option *ngFor="let grupo of grupos" [value]="grupo.id">-->
+                                <mat-select type="string" id="grupo" #grupo formControlName="grupo"
+                                    (selectionChange)="selectSubGrupo($event)">
+                                    <mat-option *ngFor="let grupo of grupos" [value]="grupo.id">
                                         {{grupo.nome}}
                                     </mat-option>
-
                                 </mat-select>
                             </mat-form-field>
                         </ng-container>
                         <ng-container formGroupName="produto">
                             <mat-form-field class="half-width-2">
                                 <mat-label>Sub. Grupo</mat-label>
-                                <mat-select matNativeControl type="string" id="subGrupo" formControlName="subGrupo">
+                                <mat-select type="string" id="subGrupo" #subGrupo formControlName="subGrupo">
 
-                                    <mat-option *ngFor="let subGrupo of subGrupos" [value]="subGrupo">
+                                    <mat-option *ngFor="let subGrupo of subGrupos" [value]="subGrupo.id">
                                         {{subGrupo.nome}}
                                     </mat-option>
 
                                 </mat-select>
                             </mat-form-field>
                         </ng-container>
-
-
-
-
-
-
-
-                        <ng-container formGroupName="codBarra">
-                            <mat-form-field class="min-width">
+                        <ng-container formGroupName="produto">
+                            <mat-form-field class="half-width-4">
                                 <mat-label>Unidade.</mat-label>
-                                <mat-select matNativeControl type="string" formControlName="unidade">
-                                    <mat-option value='UND'>UND</mat-option>
-                                    <mat-option value='Kg'>Kg</mat-option>
+                                <mat-select type="string" id="unidadeMedida" formControlName="unidadeMedida">
+                                    <mat-option *ngFor="let unidade of unidadeMedidas" [value]="unidade.id">
+                                        {{unidade.unidade}} - {{unidade.descricao}}
+                                    </mat-option>
                                 </mat-select>
                             </mat-form-field>
                         </ng-container>
@@ -141,10 +133,27 @@
 
                         </ng-container>
 
+                        <div>
+                            <ng-container formGroupName="produto">
+                                <mat-form-field class="half-width-2">
+                                    <mat-label>Marca</mat-label>
+                                    <mat-select type="string" id="marca" #marca formControlName="marca">
+                                        <mat-option *ngFor="let marca of marcas" [value]="marca.id">
+                                            {{marca.nome}}
+                                        </mat-option>
+                                    </mat-select>
+
+                                </mat-form-field>
+
+                            </ng-container>
+                            <button mat-stroked-button color="primary" (click)="addMarca()">
+                                <mat-icon>add_circle</mat-icon>
+                                Marca
+                            </button>
+
+                        </div>
 
                     </div>
-
-
 
                 </mat-card-content>
             </mat-card>
@@ -152,7 +161,7 @@
         <mat-tab label="Param. Saida">
             <mat-card>
                 <mat-card-content>
-                    Tipos de saida
+                    Tipos de saida(cadastro de mais de um codigo de barras, pack promocional e etc..)
                 </mat-card-content>
             </mat-card>
         </mat-tab>
@@ -160,7 +169,7 @@
         <mat-tab label="Param. Fiscais">
             <mat-card>
                 <mat-card-content>
-                    Param. Fiscais
+                    Param. Fiscais(sera incluido os parametros fiscais de compra e venda)
                 </mat-card-content>
             </mat-card>
         </mat-tab>

@@ -7,10 +7,10 @@ export class CrudService<T> {
 
     list() {
         return this.http.get<T[]>(this.API_URL)
-        //.pipe(
-        //    delay(2000),
-        //    tap(console.log)
-        //);
+        // .pipe(
+        //       delay(2000),
+        //      tap(console.log)
+        //  );
     }
 
     loadByID(id) {

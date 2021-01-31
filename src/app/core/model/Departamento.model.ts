@@ -1,4 +1,4 @@
 export class Departamento {
-    id: number;
+    id?: number;
     nome: string;
 }

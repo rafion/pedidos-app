@@ -4,7 +4,6 @@ export class CodBarra {
     id?: number;
     produto?: Produto;
     codBarra: string;
-    unidade: string;
     fator: number;
     ativo: boolean;
     favorito: boolean;
@@ -16,7 +15,6 @@ export class CodBarra {
             this.produto = null,
             this.ativo = true,
             this.fator = null,
-            this.unidade = '',
             this.favorito = false
     }
 

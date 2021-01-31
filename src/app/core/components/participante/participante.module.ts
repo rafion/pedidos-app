@@ -1,3 +1,4 @@
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ParticipanteRoutingModule } from './participante-routing.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -27,6 +28,7 @@ import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatDialogModule } from '@angular/material/dialog';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 import { NgxMaskModule } from 'ngx-mask';
 import { NgBrazil } from 'ng-brazil';
@@ -65,7 +67,10 @@ import { ParticipanteContatoDialogComponent } from './participante-contato-dialo
     MatTableModule,
     MatPaginatorModule,
     MatSortModule,
-    MatDialogModule
+    MatDialogModule,
+    MatProgressBarModule,
+    MatProgressSpinnerModule
+
   ],
   exports: [
     MatCardModule,

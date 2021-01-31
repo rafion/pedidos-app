@@ -1,3 +1,4 @@
+import { LoaderService } from './../../../shared/services/loader.service';
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
 import { BreakpointObserver, Breakpoints, BreakpointState } from '@angular/cdk/layout';
@@ -17,6 +18,9 @@ export class NavComponent {
   isHandset: Observable<BreakpointState> = this.breakpointObserver.observe(
     Breakpoints.Handset
   );
-  constructor(private breakpointObserver: BreakpointObserver) { }
+  constructor(
+    private breakpointObserver: BreakpointObserver,
+    public loaderService: LoaderService
+  ) { }
 
 }
