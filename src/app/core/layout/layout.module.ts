@@ -1,5 +1,5 @@
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MaterialModule } from './../material/material.module';
+import { FormsModule } from '@angular/forms';
 
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -14,16 +14,6 @@ import { FooterComponent } from './footer/footer.component';
 import { SidebarComponent } from './sidebar/sidebar.component';
 import { HeaderComponent } from './header/header.component';
 
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatButtonModule } from '@angular/material/button';
-import { MatSidenavModule } from '@angular/material/sidenav';
-import { MatIconModule } from '@angular/material/icon';
-import { MatInputModule } from '@angular/material/input';
-import { MatMenuModule } from '@angular/material/menu';
-import { MatListModule } from '@angular/material/list';
-import { MatSnackBarModule } from '@angular/material/snack-bar';
-import { MatAutocompleteModule } from '@angular/material/autocomplete';
-import { MatExpansionModule } from '@angular/material/expansion';
 import { AppRoutingModule } from '../../app-routing.module';
 
 
@@ -40,36 +30,20 @@ import { AppRoutingModule } from '../../app-routing.module';
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatInputModule,
-    MatMenuModule,
-    MatListModule,
-    MatSnackBarModule,
-    MatAutocompleteModule,
-    MatExpansionModule,
     FlexLayoutModule,
-    MatProgressBarModule,
-    MatProgressSpinnerModule
+    FormsModule,
+    MaterialModule
+
 
   ],
   exports: [
     CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatInputModule,
-    MatMenuModule,
-    MatListModule,
-    MatSnackBarModule,
-    MatAutocompleteModule,
-    MatExpansionModule,
-    FlexLayoutModule
+    FormsModule,
+    MaterialModule
+
+
   ]
 })
 export class LayoutModule { }

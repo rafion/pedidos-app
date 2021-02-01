@@ -5,7 +5,7 @@ import { CodBarra } from './CodBarra.model';
 import { UnidadeMedida } from './UnidadeMedida.model';
 export class Produto {
     id?: number;
-    descricao: string;
+    nome: string;
     referencia: string;
     precoCompra: number;
     precoVenda: number;
@@ -21,7 +21,7 @@ export class Produto {
 
     constructor() {
         this.id = null,
-            this.descricao = '',
+            this.nome = '',
             this.referencia = '',
             this.precoCompra = null,
             this.precoVenda = null,

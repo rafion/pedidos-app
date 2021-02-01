@@ -1,3 +1,8 @@
-<app-header> </app-header>
-<app-nav></app-nav>
-<app-footer></app-footer>
+<div class="mat-app-background" [ngClass]="{'dark-theme-mode':isDarkTheme}">
+
+    <!--recebe evento disparado no header component-->
+    <app-header (darkThemeEmitter)="receberThema($event)"> </app-header>
+    <app-nav></app-nav>
+    <app-footer></app-footer>
+
+</div>

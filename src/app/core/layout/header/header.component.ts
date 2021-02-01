@@ -1,7 +1,7 @@
 import { HeaderService } from './../../service/header.service';
 import { NavigationEnd, Router } from '@angular/router';
 
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import Swal from 'sweetalert2';
 
 @Component({
@@ -10,6 +10,11 @@ import Swal from 'sweetalert2';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
+
+  //emite evento que pode ser capturado no component pai
+  @Output() darkThemeEmitter = new EventEmitter();
+
+  isDarkTheme: boolean = false;
 
   public pushRightClass: string;
 
@@ -33,12 +38,26 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.pushRightClass = 'push-right';
+    this.isDarkTheme = localStorage.getItem('theme') === "Dark" ? true : false;
+
+
+
   }
 
   //acrescenta a classe css push-right a div id=sidebar para fechar e abrir sidebar
   isToggled(): boolean {
     const dom: Element = document.querySelector('.sidenav');
     return dom.classList.contains(this.pushRightClass);
+  }
+
+  storeThemeSelection() {
+    localStorage.setItem('theme', this.isDarkTheme ? "Dark" : "Light");
+    //emite evento que pode ser capturado no component pai, nesse caso o layout component
+    this.darkThemeEmitter.emit(this.isDarkTheme);
+  }
+
+  darkThemeMode(): void {
+    this.darkThemeEmitter.emit(this.isDarkTheme);
   }
 
   toggleSidebar() {

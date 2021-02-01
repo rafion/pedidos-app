@@ -73,7 +73,7 @@ const matModules = [
   MatToolbarModule,
   MatTooltipModule,
   MatTreeModule,
-  MatFormFieldModule,
+  MatFormFieldModule
 ];
 
 @NgModule({

@@ -113,7 +113,7 @@ export class ProdutoCreateComponent implements OnInit {
     this.produtoForm = this.formBuilder.group({
       produto: this.formBuilder.group({
         id: [null],
-        descricao: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(75)]],
+        nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(75)]],
         referencia: [''],
         precoVenda: [null],
         precoCompra: [null],
@@ -214,7 +214,7 @@ export class ProdutoCreateComponent implements OnInit {
     this.produtoForm.patchValue({
       produto: {
         id: produto.id,
-        descricao: produto.descricao,
+        nome: produto.nome,
         precoCompra: produto.precoCompra,
         precoVenda: produto.precoVenda,
         dataValidade: produto.dataValidade,

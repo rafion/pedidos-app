@@ -1,4 +1,4 @@
-<mat-toolbar color="primary" class="fix-nav">
+<mat-toolbar color="primary" class="fix-nav" class="mat-app-background" [ngClass]="{'dark-theme-mode':isDarkTheme}">
     <button type="button" mat-icon-button class="visible-sm" (click)="toggleSidebar()">
         <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
     </button>
@@ -21,6 +21,13 @@
 
         </mat-form-field>
     </form>
+
+
+
+    <mat-slide-toggle [(ngModel)]="isDarkTheme" labelPosition="before" (change)="storeThemeSelection()">
+        <mat-icon>bedtime</mat-icon>
+    </mat-slide-toggle>
+
 
     <button class="hidden-sm" mat-icon-button [matMenuTriggerFor]="language">
         <mat-icon>language</mat-icon>
